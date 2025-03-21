@@ -94,10 +94,11 @@ html {
 /* ============= REUSABLE CLASSES ============= */
 .section {
 	padding: 4rem 0;
-	.section__title {
-		text-align: center;
-		margin: var(--mr-3) 0;
-	}
+}
+
+.section__title {
+	text-align: center;
+	margin: var(--mr-3) 0;
 }
 
 .grid--container {
@@ -123,29 +124,16 @@ html {
 	transition: all 0.3s ease-in-out;
 	color: var(--bg-color-section2);
 	background-color: var(--primary-color);
+}
 
-	&:hover {
-		translate: 0px -4px;
-		box-shadow: 0px 3px 10px #8d2887;
-	}
+.btn:hover {
+	transform: translateY(-4px);
+	box-shadow: 0px 3px 10px rgba(141, 40, 135, 0.5);
 }
 
 .btn--primary {
 	color: var(--primary-color);
 	background-color: var(--bg-color-buttons);
-}
-
-::-webkit-scrollbar {
-	width: 10px;
-}
-
-::-webkit-scrollbar-track {
-	background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-	background: var(--bg-color-buttons);
-	border-radius: 4px;
 }
 
 /*===== Loader =====*/
@@ -197,200 +185,199 @@ html {
 	animation: animation-bar linear both;
 	animation-timeline: scroll(root block);
 	animation-range: 0 200px;
+}
+.navbar {
+	justify-content: space-between;
 
-	.navbar {
-		justify-content: space-between;
-
-		.navbar__logo {
-			column-gap: 0.25rem;
-			font-weight: var(--font-semi-bold);
-			color: var(--primary-color);
-		}
-
-		.navbar__menu {
-			position: fixed;
-			top: -500%;
-			left: 0;
-			width: 100%;
-			border-radius: 0 0 12px 12px;
-			background-color: var(--bg-color-section2);
-			box-shadow: 0px 1px 9px 2px #00000024;
-			padding: 2rem 0;
-			transition: all 0.6s;
-			z-index: var(--z-modal);
-
-			&:target {
-				top: 0;
-			}
-
-			.navbar__list {
-				flex-direction: column;
-				gap: 20px;
-
-				.navbar__item {
-					.navbar__link {
-						color: var(--primary-color);
-						font-size: 1.1rem;
-						font-weight: var(--font-semi-bold);
-						transition: color 0.3s;
-
-						&:hover {
-							color: #8d2887;
-						}
-					}
-
-					.active {
-						border-bottom: 2px solid #8d2887;
-					}
-				}
-			}
-
-			.btn__close {
-				position: absolute;
-				top: var(--mr-2);
-				right: var(--mr-2);
-				background-color: var(--bg-color-section1);
-				width: 38px;
-				height: 38px;
-				border-radius: 50%;
-
-				&:hover {
-					background-color: #dfdfdf;
-				}
-			}
-		}
-
-		/* toggles  */
-		.navbar__toggles {
-			gap: 1rem;
-
-			/* darkmode toggle */
-			.navbar__toggle--darkmode {
-				.navbar__toggle--darkmode-label {
-					width: 42px;
-					height: 20px;
-					position: relative;
-					display: block;
-					background: #edc5e6;
-					border-radius: 20px;
-					box-shadow: inset 0px 2px 5px #4c013966, inset 0px -2px 5px #f7a3f266;
-					cursor: pointer;
-					transition: 0.3s;
-
-					&::after {
-						content: '';
-						width: 16px;
-						height: 16px;
-						position: absolute;
-						top: 2px;
-						left: 2px;
-						background: linear-gradient(180deg, #ffcc89, #d8860b);
-						border-radius: 20px;
-						box-shadow: 0px 5px 10px #00000033;
-						transition: 0.3s;
-					}
-
-					&:active::after {
-						width: 40px;
-					}
-
-					i {
-						position: absolute;
-						font-size: 14px;
-						top: 3px;
-						z-index: var(--z-fixed);
-
-						&.navbar__toggle--darkmode-sun {
-							left: 3px;
-							color: var(--bg-color-section2);
-							transition: 0.3s;
-						}
-
-						&.navbar__toggle--darkmode-moon {
-							right: 2px;
-							color: #a25f92;
-							transition: 0.3s;
-						}
-					}
-				}
-
-				.navbar__toggle--darkmode-input {
-					visibility: hidden;
-
-					&:checked + label {
-						background: #242424;
-
-						&::after {
-							left: 40px;
-							transform: translateX(-100%);
-							background: linear-gradient(180deg, #dd8eda, #d963bc);
-						}
-
-						.bx-sun {
-							color: #a25f92;
-						}
-
-						.bx-moon {
-							color: var(--bg-color-section2);
-						}
-					}
-				}
-			}
-
-			/* language toggle */
-			.navbar__toggle--language {
-				.navbar__toggle--language-label {
-					width: 42px;
-					height: 20px;
-					position: relative;
-					display: block;
-					background: #d2a3e6;
-					border-radius: 20px;
-					box-shadow: inset 0px 2px 5px #00000066, inset 0px -2px 5px #a25f92;
-					cursor: pointer;
-					transition: 0.3s;
-
-					&::after {
-						content: '';
-						width: 16px;
-						height: 16px;
-						position: absolute;
-						top: 2px;
-						left: 2px;
-						background-image: url(../img/espana.png);
-						background-size: cover;
-						background-repeat: no-repeat;
-						border-radius: 50%;
-						box-shadow: 0px 5px 10px #00000033;
-						transition: 0.3s;
-					}
-				}
-
-				.navbar__toggle--language-input {
-					visibility: hidden;
-
-					&:checked + label {
-						&::after {
-							left: 40px;
-							transform: translateX(-100%);
-							background-image: url(../img/reino-unido.png);
-						}
-					}
-				}
-			}
-		}
-	}
-	.btn__open,
-	.btn__close,
-	.navbar__logo i {
-		font-size: 2.2rem;
+	.navbar__logo {
+		column-gap: 0.25rem;
+		font-weight: var(--font-semi-bold);
 		color: var(--primary-color);
-		transition: background 0.3s;
 	}
-	.btn__open {
-		&:hover {
-			background-color: #f4b8e6;
+
+	.navbar__menu {
+		position: fixed;
+		top: -500%;
+		left: 0;
+		width: 100%;
+		border-radius: 0 0 12px 12px;
+		background-color: var(--bg-color-section2);
+		box-shadow: 0px 1px 9px 2px #00000024;
+		padding: 2rem 0;
+		transition: all 0.6s;
+		z-index: var(--z-modal);
+
+		&:target {
+			top: 0;
 		}
+
+		.navbar__list {
+			flex-direction: column;
+			gap: 20px;
+
+			.navbar__item {
+				.navbar__link {
+					color: var(--primary-color);
+					font-size: 1.1rem;
+					font-weight: var(--font-semi-bold);
+					transition: color 0.3s;
+
+					&:hover {
+						color: #8d2887;
+					}
+				}
+
+				.active {
+					border-bottom: 2px solid #8d2887;
+				}
+			}
+		}
+
+		.btn__close {
+			position: absolute;
+			top: var(--mr-2);
+			right: var(--mr-2);
+			background-color: var(--bg-color-section1);
+			width: 38px;
+			height: 38px;
+			border-radius: 50%;
+
+			&:hover {
+				background-color: #dfdfdf;
+			}
+		}
+	}
+
+	/* toggles  */
+	.navbar__toggles {
+		gap: 1rem;
+
+		/* darkmode toggle */
+		.navbar__toggle--darkmode {
+			.navbar__toggle--darkmode-label {
+				width: 42px;
+				height: 20px;
+				position: relative;
+				display: block;
+				background: #edc5e6;
+				border-radius: 20px;
+				box-shadow: inset 0px 2px 5px #4c013966, inset 0px -2px 5px #f7a3f266;
+				cursor: pointer;
+				transition: 0.3s;
+
+				&::after {
+					content: '';
+					width: 16px;
+					height: 16px;
+					position: absolute;
+					top: 2px;
+					left: 2px;
+					background: linear-gradient(180deg, #ffcc89, #d8860b);
+					border-radius: 20px;
+					box-shadow: 0px 5px 10px #00000033;
+					transition: 0.3s;
+				}
+
+				&:active::after {
+					width: 40px;
+				}
+
+				i {
+					position: absolute;
+					font-size: 14px;
+					top: 3px;
+					z-index: var(--z-fixed);
+
+					&.navbar__toggle--darkmode-sun {
+						left: 3px;
+						color: var(--bg-color-section2);
+						transition: 0.3s;
+					}
+
+					&.navbar__toggle--darkmode-moon {
+						right: 2px;
+						color: #a25f92;
+						transition: 0.3s;
+					}
+				}
+			}
+
+			.navbar__toggle--darkmode-input {
+				visibility: hidden;
+
+				&:checked + label {
+					background: #242424;
+
+					&::after {
+						left: 40px;
+						transform: translateX(-100%);
+						background: linear-gradient(180deg, #dd8eda, #d963bc);
+					}
+
+					.bx-sun {
+						color: #a25f92;
+					}
+
+					.bx-moon {
+						color: var(--bg-color-section2);
+					}
+				}
+			}
+		}
+
+		/* language toggle */
+		.navbar__toggle--language {
+			.navbar__toggle--language-label {
+				width: 42px;
+				height: 20px;
+				position: relative;
+				display: block;
+				background: #d2a3e6;
+				border-radius: 20px;
+				box-shadow: inset 0px 2px 5px #00000066, inset 0px -2px 5px #a25f92;
+				cursor: pointer;
+				transition: 0.3s;
+
+				&::after {
+					content: '';
+					width: 16px;
+					height: 16px;
+					position: absolute;
+					top: 2px;
+					left: 2px;
+					background-image: url(../img/espana.png);
+					background-size: cover;
+					background-repeat: no-repeat;
+					border-radius: 50%;
+					box-shadow: 0px 5px 10px #00000033;
+					transition: 0.3s;
+				}
+			}
+
+			.navbar__toggle--language-input {
+				visibility: hidden;
+
+				&:checked + label {
+					&::after {
+						left: 40px;
+						transform: translateX(-100%);
+						background-image: url(../img/reino-unido.png);
+					}
+				}
+			}
+		}
+	}
+}
+.btn__open,
+.btn__close,
+.navbar__logo i {
+	font-size: 2.2rem;
+	color: var(--primary-color);
+	transition: background 0.3s;
+}
+.btn__open {
+	&:hover {
+		background-color: #f4b8e6;
 	}
 }
 
