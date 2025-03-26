@@ -8,20 +8,29 @@
   <meta name="author" content="Estéfani Torres" />
   <meta name="description" content="Organizated and Creative" />
   <meta name="keywords" content="web developer, designer, frontend programmer" />
-  <meta name="theme-color" content="#09f" />
+  <meta name="theme-color" content="#b67bc0" />
   <meta name="view-transition" content="same-origin" />
   <!-- Iconos  -->
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <!-- Fuente  -->
+  <!-- Fuentes  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <title>Portfolio</title>
   <link rel="icon" href="assets/img/d.png" type="image/png" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <script type="module" src="assets/js/main.js"></script>
+  <!-- Integración de email JS-->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+  </script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init({
+        publicKey: "vaHVs7gXtZ5hWi7en",
+      });
+    })();
+  </script>
 </head>
 
 <body>
@@ -35,7 +44,7 @@
   </div>
   <!-- header  -->
   <header class="header">
-    <nav class="navbar grid--container flex--container">
+    <nav class="navbar flex--container">
       <a class="navbar__logo flex--container" href="#"><i class="bx bxs-registered"></i>Estéfani</a>
 
       <div id="nav" class="navbar__menu spanish">
@@ -91,8 +100,12 @@
       <i class="bx bxl-graphql home__layer home__layer--10" data-speed="-7"></i>
       <i class="bx bx-code-alt home__layer home__layer--11" data-speed="-5"></i>
       <div class="home__container grid--container">
-        <div class="home__image">
-          <img src="assets/img/yo.JPG" alt="profile photo" title="Estéfani Torres" />
+        <div class="home__image-container">
+          <div class="home__image">
+            <img src="assets/img/yo.JPG" alt="profile photo" title="Estéfani Torres" />
+          </div>
+          <div class="home__image-decoration"></div>
+          <div class="home__image-glow"></div>
         </div>
 
         <ul class="home__social flex--container">
@@ -116,7 +129,9 @@
         </ul>
 
         <div class="home__info">
-          <h1 class="home__title">Hello, I'm Fani</h1>
+          <div class="home__title-container">
+            <h1 class="home__title">Hello, I'm Fani</h1>
+          </div>
 
           <p class="home__description">
             I am a web developer, passionate about programming and design.
@@ -125,8 +140,8 @@
 
         <div class="home__buttons">
           <a class="btn btn--primary" href="assets/img/Currículum Estéfani (en español e inglés).pdf"
-            title="Descargar mi CV" download="Curriculum" rel="noreferrer nofollow">
-            Downland CV
+            title="Download CV" download="Curriculum" rel="noreferrer nofollow">
+            <i class="bx bx-download"></i> Download CV
           </a>
         </div>
       </div>
@@ -143,15 +158,15 @@
         <div class="about__cards flex--container">
           <!--Card 1 -->
           <div class="about__card">
-            <img class="about__card--img" src="assets/img/yo3.jpeg" alt="Programando" title="Programando" />
+            <img class="about__card--img" src="assets/img/yo3.jpeg" alt="Programming" title="Programming" />
           </div>
           <!--Card 2 -->
           <div class="about__card">
-            <img class="about__card--img" src="assets/img/yo2.jpg" alt="Diseñando" title="Laborando como diseñador" />
+            <img class="about__card--img" src="assets/img/yo2.jpg" alt="Designing" title="Working as a designer" />
           </div>
           <!--Card 3 -->
           <div class="about__card">
-            <img class="about__card--img" src="assets/img/cuadro.jpg" alt="Cooperación" title="tabajando en equipo" />
+            <img class="about__card--img" src="assets/img/cuadro.jpg" alt="Cooperation" title="Working in a team" />
           </div>
         </div>
       </div>
@@ -245,22 +260,21 @@
           <h3 class="skills__tags-title">
             Soft Skills</h3>
           <div class="skills__tags-container flex--container">
-            <span class="skills__tag">Responsable</span>
+            <span class="skills__tag">Responsible</span>
             <span class="skills__tag">Teamwork</span>
             <span class="skills__tag">Creative</span>
-            <span class="skills__tag">Puntual</span>
+            <span class="skills__tag">Punctual</span>
             <span class="skills__tag">Proactive</span>
-            <span class="skills__tag">Autodidactic</span>
+            <span class="skills__tag">Self-taught</span>
           </div>
         </div>
       </div>
     </section>
     <section id="projects" class="projects section">
       <h2 class="section__title">Projects</h2>
-
-      <div class="projects__container grid--container">
+      <div class="projects__container">
         <div class="projects__project">
-          <div class="projects__inner grid--container">
+          <div class="projects__inner">
             <div class="projects__image">
               <img src="assets/img/cr.png" alt="project 1" title="Crud app" />
             </div>
@@ -273,103 +287,101 @@
               </p>
 
               <div class="projects__buttons">
-                <button class="btn projects__button" type="button"
+                <button class="projects__button" type="button"
                   onclick="window.location.href='https://users-managerr.netlify.app/';">
-                  VIEW DEMO
+                  <i class="bx bx-link-external"></i> VIEW DEMO
                 </button>
-                <button class="btn projects__button" type="button"
-                  onclick="window.location.href='https://github.com/https://github.com/estefaniii/Crud-app';">
-                  VIEW CODE
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://github.com/estefaniii/Crud-app';">
+                  <i class="bx bxl-github"></i> VIEW CODE
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="projects__container grid--container">
-          <div class="projects__project">
-            <div class="projects__inner grid--container">
-              <div class="projects__image">
-                <img src="assets/img/wt.png" alt="project 1" title="Ecommerce Vanilla" />
-              </div>
+        <div class="projects__project">
+          <div class="projects__inner">
+            <div class="projects__image">
+              <img src="assets/img/wt.png" alt="Weather App" title="Weather App" />
+            </div>
 
-              <div class="projects__info">
-                <h3 class="projects__name">Weather App</h3>
-                <p class="projects__description">
-                  Get real-time weather updates for any location! Check temperature, wind speed, cloud coverage, and
-                  atmospheric pressure with accurate data from a weather API.
-                </p>
+            <div class="projects__info">
+              <h3 class="projects__name">Weather App</h3>
+              <p class="projects__description">
+                Get real-time weather updates for any location! Check temperature, wind speed, cloud coverage, and
+                atmospheric pressure with accurate data from a weather API.
+              </p>
 
-                <div class="projects__buttons">
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://weatherrraapp.netlify.app';">
-                    VIEW DEMO
-                  </button>
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://github.com/estefaniii/Weather-app';">
-                    VIEW CODE
-                  </button>
-                </div>
+              <div class="projects__buttons">
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://weatherrraapp.netlify.app';">
+                  <i class="bx bx-link-external"></i> VIEW DEMO
+                </button>
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://github.com/estefaniii/Weather-app';">
+                  <i class="bx bxl-github"></i> VIEW CODE
+                </button>
               </div>
             </div>
           </div>
-
-          <div class="projects__project">
-            <div class="projects__inner grid--container">
-              <div class="projects__image">
-                <img src="assets/img/fc.png" alt="project 1" title="Consumiendo API Pokemon con React" />
-              </div>
-
-              <div class="projects__info">
-                <h3 class="projects__name">Fortune Cookie</h3>
-                <p class="projects__description">
-                  Reveal a random fortune! Get inspiring, funny, or thought-provoking messages with every click.
-                </p>
-
-                <div class="projects__buttons">
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://galletadefortuna.netlify.app/';">
-                    VIEW DEMO
-                  </button>
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://github.com/estefaniii/galletafortuna';">
-                    VIEW CODE
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="projects__project">
-            <div class="projects__inner grid--container">
-              <div class="projects__image">
-                <img src="assets/img/rm.png" alt="project 1" title="CRUD con React" />
-              </div>
-
-              <div class="projects__info">
-                <h3 class="projects__name">Rick & Morty App</h3>
-                <p class="projects__description">
-                  A web app using an API to explore all Rick and Morty characters, their dimensions, episodes, and
-                  status.
-                  Search by dimension and discover multiversal connections!
-                </p>
-
-                <div class="projects__buttons">
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://github.com/estefaniii/Rick-and-Morty-App';">
-                    VIEW DEMO
-                  </button>
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://rickmortyyy-app.netlify.app/';">
-                    VIEW CODE
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
+
+        <div class="projects__project">
+          <div class="projects__inner">
+            <div class="projects__image">
+              <img src="assets/img/fc.png" alt="Fortune Cookie" title="Fortune Cookie App" />
+            </div>
+
+            <div class="projects__info">
+              <h3 class="projects__name">Fortune Cookie</h3>
+              <p class="projects__description">
+                Reveal a random fortune! Get inspiring, funny, or thought-provoking messages with every click.
+              </p>
+
+              <div class="projects__buttons">
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://galletadefortuna.netlify.app/';">
+                  <i class="bx bx-link-external"></i> VIEW DEMO
+                </button>
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://github.com/estefaniii/galletafortuna';">
+                  <i class="bx bxl-github"></i> VIEW CODE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="projects__project">
+          <div class="projects__inner">
+            <div class="projects__image">
+              <img src="assets/img/rm.png" alt="Rick & Morty App" title="Rick & Morty App" />
+            </div>
+
+            <div class="projects__info">
+              <h3 class="projects__name">Rick & Morty App</h3>
+              <p class="projects__description">
+                A web app using an API to explore all Rick and Morty characters, their dimensions, episodes, and
+                status. Search by dimension and discover multiversal connections!
+              </p>
+
+              <div class="projects__buttons">
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://rickmortyyy-app.netlify.app/';">
+                  <i class="bx bx-link-external"></i> VIEW DEMO
+                </button>
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://github.com/estefaniii/Rick-and-Morty-App';">
+                  <i class="bx bxl-github"></i> VIEW CODE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
+
     <section id="contact" class="contact section">
       <h2 class="section__title">Contact</h2>
 
@@ -404,7 +416,8 @@
               <i class="bx bxs-envelope"></i>
 
               <span class="contact__info-mail">
-                <a id="mail" href="mailto:test@correo.com" target="_blank" rel="noreferrer nofollow">
+                <a id="mail" href="mailto:estefanidelosangelestorres@gmail.com" target="_blank"
+                  rel="noreferrer nofollow">
                   estefanidelosangelestorres@gmail.com
                 </a>
               </span>
@@ -422,22 +435,23 @@
           <form id="form" class="contact__form-container">
             <div class="contact__form-group">
               <label for="name" class="contact__form-label">Name</label>
-              <input type="text" id="name" name="name" class="contact__form-input" />
+              <input type="text" id="name" name="name" class="contact__form-input" autocomplete="name" />
             </div>
 
             <div class="contact__form-group">
-              <label for="email" class="contact__form-label">Mail</label>
-              <input type="email" id="email" name="email" class="contact__form-input" />
+              <label for="email" class="contact__form-label">Email</label>
+              <input type="email" id="email" name="email" class="contact__form-input" autocomplete="email" />
             </div>
 
             <div class="contact__form-group">
               <label for="subject" class="contact__form-label">Subject</label>
-              <input type="text" id="subject" name="subject" class="contact__form-input" />
+              <input type="text" id="subject" name="subject" class="contact__form-input" autocomplete="off" />
             </div>
 
             <div class="contact__form-group">
-              <label for="message" class="contact__form-label">Menssage</label>
-              <textarea id="message" name="message" cols="30" rows="10" class="contact__form-input"></textarea>
+              <label for="message" class="contact__form-label">Message</label>
+              <textarea id="message" name="message" cols="30" rows="10" class="contact__form-input"
+                autocomplete="off"></textarea>
             </div>
             <dialog class="contact__form-modal" id="modal">
               Form successfully submitted!
@@ -445,7 +459,7 @@
             </dialog>
 
             <button type="submit" class="btn contact__form-button">
-              Send
+              <i class="bx bx-send"></i> Send
             </button>
           </form>
         </div>
@@ -488,7 +502,7 @@
         </ul>
       </div>
     </div>
-    <script type="module" src="./js/changeLanguage.js"></script>
+    <script type="module" src="assets/js/modules/main.js"></script>
     <p class="footer__copy"><span id="currentyear"></span> All rights reserved.</p>
   </footer>
 </body>

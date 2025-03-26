@@ -8,20 +8,20 @@
   <meta name="author" content="Estéfani Torres" />
   <meta name="description" content="Organizada y Creativa" />
   <meta name="keywords" content="desarrolladora web, diseñadora, programador frontend" />
-  <meta name="theme-color" content="#09f" />
+  <!-- Actualizar el color del tema en el meta tag -->
+  <meta name="theme-color" content="#b67bc0" />
   <meta name="view-transition" content="same-origin" />
   <!-- Iconos  -->
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <!-- Fuente  -->
+  <!-- Fuentes  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <title>Portafolio</title>
   <link rel="icon" href="assets/img/d.png" type="image/png" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <script type="module" src="assets/js/main.js"></script>
   <!-- Integración de email JS-->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
   </script>
@@ -31,7 +31,6 @@
         publicKey: "vaHVs7gXtZ5hWi7en",
       });
     })();
-  </script>
   </script>
 </head>
 
@@ -46,7 +45,7 @@
   </div>
   <!-- header  -->
   <header class="header">
-    <nav class="navbar grid--container flex--container">
+    <nav class="navbar flex--container">
       <a class="navbar__logo flex--container" href="#"><i class="bx bxs-registered"></i>Estéfani</a>
 
       <div id="nav" class="navbar__menu spanish">
@@ -102,8 +101,12 @@
       <i class="bx bxl-graphql home__layer home__layer--10" data-speed="-7"></i>
       <i class="bx bx-code-alt home__layer home__layer--11" data-speed="-5"></i>
       <div class="home__container grid--container">
-        <div class="home__image">
-          <img src="assets/img/yo.JPG" alt="profile photo" title="Estéfani Torres" />
+        <div class="home__image-container">
+          <div class="home__image">
+            <img src="assets/img/yo.JPG" alt="profile photo" title="Estéfani Torres" />
+          </div>
+          <div class="home__image-decoration"></div>
+          <div class="home__image-glow"></div>
         </div>
 
         <ul class="home__social flex--container">
@@ -127,7 +130,9 @@
         </ul>
 
         <div class="home__info">
-          <h1 class="home__title">Hola, soy Fani</h1>
+          <div class="home__title-container">
+            <h1 class="home__title">Hola, soy Fani</h1>
+          </div>
 
           <p class="home__description">
             Soy desarrolladora web, apasionada por la programación y el diseño.
@@ -137,7 +142,7 @@
         <div class="home__buttons">
           <a class="btn btn--primary" href="assets/img/Currículum Estéfani (en español e inglés).pdf"
             title="Descargar mi CV" download="Curriculum" rel="noreferrer nofollow">
-            Descargar CV
+            <i class="bx bx-download"></i> Descargar CV
           </a>
         </div>
       </div>
@@ -259,12 +264,12 @@
         </div>
       </div>
     </section>
+    <!-- Actualizar la sección de proyectos para usar grid en lugar de flex -->
     <section id="projects" class="projects section">
       <h2 class="section__title">Proyectos</h2>
-
-      <div class="projects__container grid--container">
+      <div class="projects__container">
         <div class="projects__project">
-          <div class="projects__inner grid--container">
+          <div class="projects__inner">
             <div class="projects__image">
               <img src="assets/img/cr.png" alt="project 1" title="Crud app" />
             </div>
@@ -277,104 +282,104 @@
               </p>
 
               <div class="projects__buttons">
-                <button class="btn projects__button" type="button"
+                <button class="projects__button" type="button"
                   onclick="window.location.href='https://users-managerr.netlify.app/';">
-                  VER DEMO
+                  <i class="bx bx-link-external"></i> VER DEMO
                 </button>
-                <button class="btn projects__button" type="button"
-                  onclick="window.location.href='https://github.com/https://github.com/estefaniii/Crud-app';">
-                  VER CÓDIGO
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://github.com/estefaniii/Crud-app';">
+                  <i class="bx bxl-github"></i> VER CÓDIGO
                 </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="projects__container grid--container">
-          <div class="projects__project">
-            <div class="projects__inner grid--container">
-              <div class="projects__image">
-                <img src="assets/img/wt.png" alt="project 2" title="Ecommerce Vanilla" />
-              </div>
+        <div class="projects__project">
+          <div class="projects__inner">
+            <div class="projects__image">
+              <img src="assets/img/wt.png" alt="Weather App" title="Weather App" />
+            </div>
 
-              <div class="projects__info">
-                <h3 class="projects__name">Weather App</h3>
-                <p class="projects__description">
-                  Obtén información meteorológica actualizada en tiempo real sobre cualquier lugar. Comprueba la
-                  temperatura, la velocidad del viento, la cobertura de nubes y la presión atmosférica con datos
-                  precisos
-                  de una API meteorológica.
-                </p>
+            <div class="projects__info">
+              <h3 class="projects__name">Weather App</h3>
+              <p class="projects__description">
+                Obtén información meteorológica actualizada en tiempo real sobre cualquier lugar. Comprueba la
+                temperatura, la velocidad del viento, la cobertura de nubes y la presión atmosférica con datos
+                precisos de una API meteorológica.
+              </p>
 
-                <div class="projects__buttons">
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://weatherrraapp.netlify.app';">
-                    VER DEMO
-                  </button>
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://github.com/estefaniii/Weather-app';">
-                    VER CÓDIGO
-                  </button>
-                </div>
+              <div class="projects__buttons">
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://weatherrraapp.netlify.app';">
+                  <i class="bx bx-link-external"></i> VER DEMO
+                </button>
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://github.com/estefaniii/Weather-app';">
+                  <i class="bx bxl-github"></i> VER CÓDIGO
+                </button>
               </div>
             </div>
           </div>
-
-          <div class="projects__project">
-            <div class="projects__inner grid--container">
-              <div class="projects__image">
-                <img src="assets/img/fc.png" alt="project 3" title="Consumiendo API Pokemon con React" />
-              </div>
-
-              <div class="projects__info">
-                <h3 class="projects__name">Galleta de la Fortuna</h3>
-                <p class="projects__description">
-                  Descubre una fortuna al azar. Obtén mensajes inspiradores, divertidos o que invitan a la reflexión con
-                  cada clic.
-                </p>
-
-                <div class="projects__buttons">
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://galletadefortuna.netlify.app/';">
-                    VER DEMO
-                  </button>
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://github.com/estefaniii/galletafortuna';">
-                    VER CÓDIGO
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="projects__project">
-            <div class="projects__inner grid--container">
-              <div class="projects__image">
-                <img src="assets/img/rm.png" alt="project 4" title="CRUD con React" />
-              </div>
-
-              <div class="projects__info">
-                <h3 class="projects__name">Rick & Morty App</h3>
-                <p class="projects__description">
-                  Una aplicación web que utiliza una API para explorar todos los personajes de Rick y Morty, sus
-                  dimensiones, episodios y estado. ¡Busca por dimensión y descubre conexiones multiversales!
-                </p>
-
-                <div class="projects__buttons">
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://rickmortyyy-app.netlify.app/';">
-                    VER DEMO
-                  </button>
-                  <button class="btn projects__button" type="button"
-                    onclick="window.location.href='https://github.com/estefaniii/Rick-and-Morty-App';">
-                    VER CÓDIGO
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
+
+        <div class="projects__project">
+          <div class="projects__inner">
+            <div class="projects__image">
+              <img src="assets/img/fc.png" alt="Galleta de la Fortuna" title="Galleta de la Fortuna" />
+            </div>
+
+            <div class="projects__info">
+              <h3 class="projects__name">Galleta de la Fortuna</h3>
+              <p class="projects__description">
+                Descubre una fortuna al azar. Obtén mensajes inspiradores, divertidos o que invitan a la reflexión con
+                cada clic.
+              </p>
+
+              <div class="projects__buttons">
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://galletadefortuna.netlify.app/';">
+                  <i class="bx bx-link-external"></i> VER DEMO
+                </button>
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://github.com/estefaniii/galletafortuna';">
+                  <i class="bx bxl-github"></i> VER CÓDIGO
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="projects__project">
+          <div class="projects__inner">
+            <div class="projects__image">
+              <img src="assets/img/rm.png" alt="Rick & Morty App" title="Rick & Morty App" />
+            </div>
+
+            <div class="projects__info">
+              <h3 class="projects__name">Rick & Morty App</h3>
+              <p class="projects__description">
+                Una aplicación web que utiliza una API para explorar todos los personajes de Rick y Morty, sus
+                dimensiones, episodios y estado. ¡Busca por dimensión y descubre conexiones multiversales!
+              </p>
+
+              <div class="projects__buttons">
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://rickmortyyy-app.netlify.app/';">
+                  <i class="bx bx-link-external"></i> VER DEMO
+                </button>
+                <button class="projects__button" type="button"
+                  onclick="window.location.href='https://github.com/estefaniii/Rick-and-Morty-App';">
+                  <i class="bx bxl-github"></i> VER CÓDIGO
+                </button>
+              </div>
+            </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
     </section>
     <section id="contact" class="contact section">
       <h2 class="section__title">Contacto</h2>
@@ -410,7 +415,8 @@
               <i class="bx bxs-envelope"></i>
 
               <span class="contact__info-mail">
-                <a id="mail" href="mailto:test@correo.com" target="_blank" rel="noreferrer nofollow">
+                <a id="mail" href="mailto:estefanidelosangelestorres@gmail.com" target="_blank"
+                  rel="noreferrer nofollow">
                   estefanidelosangelestorres@gmail.com
                 </a>
               </span>
@@ -428,22 +434,23 @@
           <form id="form" class="contact__form-container">
             <div class="contact__form-group">
               <label for="name" class="contact__form-label">Nombre</label>
-              <input type="text" id="name" name="name" class="contact__form-input" />
+              <input type="text" id="name" name="name" class="contact__form-input" autocomplete="name" />
             </div>
 
             <div class="contact__form-group">
               <label for="email" class="contact__form-label">Correo</label>
-              <input type="email" id="email" name="email" class="contact__form-input" />
+              <input type="email" id="email" name="email" class="contact__form-input" autocomplete="email" />
             </div>
 
             <div class="contact__form-group">
               <label for="subject" class="contact__form-label">Asunto</label>
-              <input type="text" id="subject" name="subject" class="contact__form-input" />
+              <input type="text" id="subject" name="subject" class="contact__form-input" autocomplete="off" />
             </div>
 
             <div class="contact__form-group">
               <label for="message" class="contact__form-label">Mensaje</label>
-              <textarea id="message" name="message" cols="30" rows="10" class="contact__form-input"></textarea>
+              <textarea id="message" name="message" cols="30" rows="10" class="contact__form-input"
+                autocomplete="off"></textarea>
             </div>
             <dialog class="contact__form-modal" id="modal">
               Formulario enviado con éxito!
@@ -451,7 +458,7 @@
             </dialog>
 
             <button type="submit" class="btn contact__form-button">
-              Enviar
+              <i class="bx bx-send"></i> Enviar
             </button>
           </form>
         </div>
@@ -494,7 +501,7 @@
         </ul>
       </div>
     </div>
-    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="assets/js/modules/main.js"></script>
     <p class="footer__copy"><span id="currentyear"></span> Todos los derechos reservados.</p>
   </footer>
 </body>
