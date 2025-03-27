@@ -98,39 +98,55 @@ function initParallax() {
 
 // ===== ACTIVE MENU =====
 function initActiveMenu() {
-	const navbarListDOM = document.querySelector('.navbar__list');
 	const navbarLinksDOM = document.querySelectorAll('.navbar__link');
 	const sectionsDOM = document.querySelectorAll('section[id]');
+	const navbarMenu = document.getElementById('nav');
 
-	if (!navbarListDOM || !navbarLinksDOM.length || !sectionsDOM.length) return;
+	if (!navbarLinksDOM.length || !sectionsDOM.length) return;
 
 	function scrollActive() {
 		const scrollY = window.pageYOffset;
+		let currentSection = '';
 
-		sectionsDOM.forEach((current) => {
-			const sectionHeight = current.offsetHeight;
-			const sectionTop = current.offsetTop - 50;
-			const sectionId = current.getAttribute('id');
-			const currentLink = document.querySelector(
-				'.navbar__link[href*=' + sectionId + ']',
-			);
+		sectionsDOM.forEach((section) => {
+			const sectionHeight = section.offsetHeight;
+			const sectionTop = section.offsetTop - 100; // Ajuste para mejor detección
+			const sectionId = section.getAttribute('id');
 
-			if (
-				currentLink &&
-				scrollY > sectionTop &&
-				scrollY <= sectionTop + sectionHeight
-			) {
-				currentLink.classList.add('active');
-			} else if (currentLink) {
-				currentLink.classList.remove('active');
+			if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+				currentSection = sectionId;
+			}
+		});
+
+		navbarLinksDOM.forEach((link) => {
+			link.classList.remove('active');
+			if (link.getAttribute('href') === `#${currentSection}`) {
+				link.classList.add('active');
 			}
 		});
 	}
 
+	// Activar al cargar la página
+	scrollActive();
+
+	// Activar al hacer scroll
 	window.addEventListener('scroll', scrollActive);
 
-	// Activar el enlace correcto al cargar la página
-	scrollActive();
+	// Cerrar menú móvil y activar enlace al hacer clic
+	navbarLinksDOM.forEach((link) => {
+		link.addEventListener('click', () => {
+			// Cerrar menú móvil si está abierto
+			if (navbarMenu && navbarMenu.classList.contains('navbar__menu')) {
+				navbarMenu.style.right = '-100%';
+			}
+
+			// Forzar actualización del estado activo
+			setTimeout(scrollActive, 100);
+		});
+	});
+
+	// Manejar cambios de hash en la URL (para navegación directa)
+	window.addEventListener('hashchange', scrollActive);
 }
 
 // ===== CURRENT YEAR =====

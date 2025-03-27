@@ -413,14 +413,22 @@ button {
 	border-radius: 3px;
 }
 
-.navbar__link:hover,
-.navbar__link.active {
+/* Estilo para hover (sin afectar active) */
+.navbar__link:hover {
 	color: var(--primary-color);
 }
 
-.navbar__link:hover::after,
-.navbar__link.active::after {
+.navbar__link:hover::after {
 	width: 100%;
+}
+
+/* Estilo para active (separado y con !important para prioridad) */
+.navbar__link.active {
+	color: var(--primary-color) !important;
+}
+
+.navbar__link.active::after {
+	width: 100% !important;
 }
 
 .navbar__icon {
