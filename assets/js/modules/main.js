@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initProjectsNavigation();
 
 	// Inicializar parallax
-	initParallax();
+	// initParallax();
 
 	// Inicializar menú activo
 	initActiveMenu();
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initSendEmail();
 
 	// Inicializar efecto de escritura
-	initTypingEffect();
+	initTypingLoop();
 
 	// Ocultar loader después de 1.5 segundos
 	setTimeout(() => {
@@ -32,69 +32,83 @@ document.addEventListener('DOMContentLoaded', () => {
 			loader.classList.add('hidden');
 		}
 	}, 1500);
+
+	const projectsContainer = document.querySelector('.projects__container');
+	const prevButton = document.querySelector('.projects__nav-button--prev');
+	const nextButton = document.querySelector('.projects__nav-button--next');
+	if (projectsContainer && prevButton && nextButton) {
+		function getProjectScrollAmount() {
+			const project = projectsContainer.querySelector('.projects__project');
+			if (!project) return projectsContainer.offsetWidth;
+			const style = window.getComputedStyle(project);
+			const gap =
+				parseFloat(style.marginRight) ||
+				parseFloat(getComputedStyle(projectsContainer).gap) ||
+				0;
+			return project.offsetWidth + gap;
+		}
+		prevButton.addEventListener('click', () => {
+			const scrollAmount = getProjectScrollAmount();
+			projectsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+		});
+		nextButton.addEventListener('click', () => {
+			const scrollAmount = getProjectScrollAmount();
+			projectsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+		});
+	}
 });
 
-// ===== TYPING EFFECT =====
-function initTypingEffect() {
-	const homeTitle = document.querySelector('.home__title');
-	const homeTitleContainer = document.querySelector('.home__title-container');
+// ===== TYPING EFFECT LOOP FOR HOME TITLE =====
+function initTypingLoop() {
+	const title = document.querySelector('.home__title');
+	if (!title) return;
+	const text = 'Hola, soy Fani';
+	let index = 0;
+	let isDeleting = false;
 
-	if (!homeTitle || !homeTitleContainer) return;
-
-	// Texto original
-	const originalText = homeTitle.textContent;
-	// Limpiar el contenido inicial
-	homeTitle.textContent = '';
-
-	// Crear el cursor
-	const cursor = document.createElement('span');
-	cursor.className = 'home__title-cursor';
-	homeTitleContainer.appendChild(cursor);
-
-	// Función para escribir el texto
-	function typeText(text, index = 0) {
-		if (index < text.length) {
-			homeTitle.textContent += text.charAt(index);
+	function type() {
+		if (!isDeleting) {
+			title.textContent = text.slice(0, index + 1);
 			index++;
-			setTimeout(() => typeText(text, index), 150); // Velocidad de escritura
+			if (index === text.length) {
+				isDeleting = true;
+				setTimeout(type, 1200); // Pausa al final
+				return;
+			}
 		} else {
-			// Cuando termina de escribir, espera y luego borra
-			setTimeout(eraseText, 2000);
+			title.textContent = text.slice(0, index - 1);
+			index--;
+			if (index === 0) {
+				isDeleting = false;
+				setTimeout(type, 600); // Pausa antes de volver a escribir
+				return;
+			}
 		}
+		setTimeout(type, isDeleting ? 60 : 100);
 	}
-
-	// Función para borrar el texto
-	function eraseText() {
-		const text = homeTitle.textContent;
-		if (text.length > 0) {
-			homeTitle.textContent = text.substring(0, text.length - 1);
-			setTimeout(eraseText, 50); // Velocidad de borrado
-		} else {
-			// Cuando termina de borrar, espera y vuelve a escribir
-			setTimeout(() => typeText(originalText), 500);
-		}
-	}
-
-	// Iniciar el efecto de escritura
-	setTimeout(() => typeText(originalText), 1000);
+	type();
 }
 
-// ===== PARALLAX EFFECT =====
-function initParallax() {
-	const iconsDOM = document.querySelectorAll('.home__layer');
-	const homeDOM = document.querySelector('.home');
+// ===== PARALLAX EFFECT (DESACTIVADO) =====
+/*
+La siguiente función ha sido desactivada para permitir que la animación
+de los iconos de fondo sea controlada exclusivamente por CSS.
+*/
+// function initParallax() {
+// 	const iconsDOM = document.querySelectorAll('.home__layer');
+// 	const homeDOM = document.querySelector('.home');
 
-	if (!homeDOM) return;
+// 	if (!homeDOM || !iconsDOM.length) return;
 
-	homeDOM.addEventListener('mousemove', (event) => {
-		iconsDOM.forEach((icon) => {
-			const speed = icon.getAttribute('data-speed');
-			const x = (window.innerWidth - event.pageX * speed) / 100;
-			const y = (window.innerHeight - event.pageY * speed) / 100;
-			icon.style.transform = `translate(${x}px, ${y}px)`;
-		});
-	});
-}
+// 	homeDOM.addEventListener('mousemove', (event) => {
+// 		iconsDOM.forEach((icon) => {
+// 			const speed = icon.getAttribute('data-speed') || 5;
+// 			const x = (window.innerWidth - event.pageX * speed) / 100;
+// 			const y = (window.innerHeight - event.pageY * speed) / 100;
+// 			icon.style.transform = `translate(${x}px, ${y}px)`;
+// 		});
+// 	});
+// }
 
 // ===== ACTIVE MENU =====
 function initActiveMenu() {
@@ -105,12 +119,12 @@ function initActiveMenu() {
 	if (!navbarLinksDOM.length || !sectionsDOM.length) return;
 
 	function scrollActive() {
-		const scrollY = window.pageYOffset;
+		const scrollY = window.scrollY;
 		let currentSection = '';
 
 		sectionsDOM.forEach((section) => {
 			const sectionHeight = section.offsetHeight;
-			const sectionTop = section.offsetTop - 100; // Ajuste para mejor detección
+			const sectionTop = section.offsetTop - 100;
 			const sectionId = section.getAttribute('id');
 
 			if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
@@ -135,17 +149,13 @@ function initActiveMenu() {
 	// Cerrar menú móvil y activar enlace al hacer clic
 	navbarLinksDOM.forEach((link) => {
 		link.addEventListener('click', () => {
-			// Cerrar menú móvil si está abierto
 			if (navbarMenu && navbarMenu.classList.contains('navbar__menu')) {
 				navbarMenu.style.right = '-100%';
 			}
-
-			// Forzar actualización del estado activo
 			setTimeout(scrollActive, 100);
 		});
 	});
 
-	// Manejar cambios de hash en la URL (para navegación directa)
 	window.addEventListener('hashchange', scrollActive);
 }
 
@@ -175,15 +185,13 @@ function initSendEmail() {
 		};
 
 		if (params.name && params.email && params.subject && params.message) {
-			// Verificar si emailjs está disponible globalmente
 			if (typeof emailjs !== 'undefined') {
-				// Usar Promise.catch para manejar errores en la promesa
 				emailjs
 					.send('service_bf8pegn', 'template_991ymha', params)
 					.then((response) => {
 						console.log('SUCCESS!', response.status, response.text);
 						if (modalDOM) modalDOM.showModal();
-						formDOM.reset(); // Limpiar el formulario después del envío exitoso
+						formDOM.reset();
 					})
 					.catch((error) => {
 						console.log('FAILED...', error);
@@ -192,10 +200,9 @@ function initSendEmail() {
 						);
 					});
 			} else {
-				// Fallback si emailjs no está disponible
 				console.log('EmailJS no está disponible');
-				if (modalDOM) modalDOM.showModal(); // Mostrar modal de éxito de todos modos para pruebas
-				formDOM.reset(); // Limpiar el formulario
+				if (modalDOM) modalDOM.showModal();
+				formDOM.reset();
 			}
 		} else {
 			alert('Por favor, completa todos los campos del formulario.');
@@ -216,24 +223,22 @@ function initDarkMode() {
 
 	if (!themeButton) return;
 
-	// Previously selected theme (if user selected)
 	const selectedTheme = localStorage.getItem('selected-theme');
+	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-	// We validate if the user previously chose a theme
+	// Aplicar tema según preferencias del usuario o configuración guardada
 	if (selectedTheme) {
-		// If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
 		document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](
 			darkTheme,
 		);
 		themeButton.checked = selectedTheme === 'dark';
+	} else if (prefersDark) {
+		document.body.classList.add(darkTheme);
+		themeButton.checked = true;
 	}
 
-	// Activate / deactivate the theme manually with the button
 	themeButton.addEventListener('change', () => {
-		// Add or remove the dark / icon theme
 		document.body.classList.toggle(darkTheme);
-
-		// We save the theme and the current icon that the user chose
 		localStorage.setItem(
 			'selected-theme',
 			document.body.classList.contains(darkTheme) ? 'dark' : 'light',
@@ -247,33 +252,22 @@ function initLanguageToggle() {
 
 	if (!languageToggle) return;
 
-	// Check the current page
 	const isEnglishPage = window.location.pathname.includes('english.html');
-
-	// Set the toggle state based on the current page
 	languageToggle.checked = isEnglishPage;
-
-	// Update the localStorage to match the current page
 	localStorage.setItem('selected-language', isEnglishPage ? 'en' : 'es');
 
-	// Handle language toggle - Mejorado para evitar problemas de promesas
 	languageToggle.addEventListener('change', () => {
-		// Guardar la preferencia antes de la redirección
 		localStorage.setItem(
 			'selected-language',
 			languageToggle.checked ? 'en' : 'es',
 		);
 
-		// Pequeño retraso para asegurar que el localStorage se actualice
 		setTimeout(() => {
-			// Redireccionar a la página correspondiente
 			if (languageToggle.checked) {
-				// Switch to English
 				if (!window.location.pathname.includes('english.html')) {
 					window.location.href = 'english.html';
 				}
 			} else {
-				// Switch to Spanish
 				if (window.location.pathname.includes('english.html')) {
 					window.location.href = 'index.html';
 				}
@@ -285,120 +279,58 @@ function initLanguageToggle() {
 // ===== PROJECTS NAVIGATION =====
 function initProjectsNavigation() {
 	const projectsContainer = document.querySelector('.projects__container');
-
 	if (!projectsContainer) return;
 
-	// Convertir el grid a un contenedor de desplazamiento horizontal en móviles
-	function adjustProjectsLayout() {
-		if (window.innerWidth < 768) {
-			projectsContainer.style.display = 'flex';
-			projectsContainer.style.overflowX = 'auto';
-			projectsContainer.style.scrollSnapType = 'x mandatory';
-			projectsContainer.style.scrollBehavior = 'smooth';
-			projectsContainer.style.gap = '1rem';
-			projectsContainer.style.padding = '1rem 0.5rem 2rem';
+	// Usar solo las flechas del HTML
+	const prevButton = document.querySelector('.projects__nav-button--prev');
+	const nextButton = document.querySelector('.projects__nav-button--next');
 
-			// Ajustar los proyectos para el scroll horizontal
-			const projects = projectsContainer.querySelectorAll('.projects__project');
-			projects.forEach((project) => {
-				project.style.flex = '0 0 280px';
-				project.style.scrollSnapAlign = 'start';
-			});
-
-			// Añadir botones de navegación si no existen
-			if (!document.querySelector('.projects__nav-button')) {
-				addNavigationButtons();
-			}
-		} else {
-			// Restaurar el diseño de grid para pantallas más grandes
-			projectsContainer.style.display = 'grid';
-			projectsContainer.style.overflowX = 'visible';
-			projectsContainer.style.scrollSnapType = 'none';
-
-			// Restaurar los proyectos
-			const projects = projectsContainer.querySelectorAll('.projects__project');
-			projects.forEach((project) => {
-				project.style.flex = 'none';
-				project.style.scrollSnapAlign = 'none';
-			});
-
-			// Eliminar botones de navegación si existen
-			removeNavigationButtons();
-		}
+	function getProjectScrollAmount() {
+		const project = projectsContainer.querySelector('.projects__project');
+		if (!project) return projectsContainer.offsetWidth;
+		const style = window.getComputedStyle(project);
+		const gap =
+			parseFloat(style.marginRight) ||
+			parseFloat(getComputedStyle(projectsContainer).gap) ||
+			0;
+		return project.offsetWidth + gap;
 	}
 
-	function addNavigationButtons() {
-		// Verificar si los botones ya existen para evitar duplicados
-		if (document.querySelector('.projects__nav-button')) return;
-
-		// Crear botones de navegación
-		const prevButton = document.createElement('button');
-		prevButton.className = 'projects__nav-button projects__nav-button--prev';
-		prevButton.innerHTML = '<i class="bx bx-chevron-left"></i>';
-
-		const nextButton = document.createElement('button');
-		nextButton.className = 'projects__nav-button projects__nav-button--next';
-		nextButton.innerHTML = '<i class="bx bx-chevron-right"></i>';
-
-		// Envolver el contenedor de proyectos
-		const projectsWrapper = document.createElement('div');
-		projectsWrapper.className = 'projects__section-wrapper';
-
-		// Obtener el padre del contenedor de proyectos
-		const projectsParent = projectsContainer.parentNode;
-
-		// Insertar el wrapper en el DOM
-		projectsParent.insertBefore(projectsWrapper, projectsContainer);
-		projectsWrapper.appendChild(projectsContainer);
-		projectsWrapper.appendChild(prevButton);
-		projectsWrapper.appendChild(nextButton);
-
-		// Funcionalidad de navegación
+	if (prevButton && nextButton) {
 		prevButton.addEventListener('click', () => {
-			projectsContainer.scrollBy({ left: -300, behavior: 'smooth' });
+			const scrollAmount = getProjectScrollAmount();
+			projectsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
 		});
-
 		nextButton.addEventListener('click', () => {
-			projectsContainer.scrollBy({ left: 300, behavior: 'smooth' });
+			const scrollAmount = getProjectScrollAmount();
+			projectsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
 		});
 	}
-
-	function removeNavigationButtons() {
-		const navButtons = document.querySelectorAll('.projects__nav-button');
-		navButtons.forEach((button) => button.remove());
-
-		// Restaurar la estructura original si es necesario
-		const projectsWrapper = document.querySelector(
-			'.projects__section-wrapper',
-		);
-		if (projectsWrapper && projectsWrapper.contains(projectsContainer)) {
-			const projectsParent = projectsWrapper.parentNode;
-			projectsParent.insertBefore(projectsContainer, projectsWrapper);
-			projectsWrapper.remove();
-		}
-	}
-
-	// Ajustar el diseño inicialmente
-	adjustProjectsLayout();
-
-	// Ajustar el diseño cuando cambia el tamaño de la ventana
-	window.addEventListener('resize', adjustProjectsLayout);
 }
 
-// Manejar errores no capturados para evitar que se muestren en la consola
+// Manejar errores no capturados
+window.addEventListener('error', (event) => {
+	console.error('Error no capturado:', event.error);
+});
+
 window.addEventListener('unhandledrejection', (event) => {
-	// Verificar si el error está relacionado con el mensaje del canal cerrado
+	console.error('Promesa rechazada no capturada:', event.reason);
+});
+
+// ===== RESTAURAR TITULO HOME SIN EFECTO DE MAQUINA DE ESCRIBIR =====
+document.addEventListener('DOMContentLoaded', function () {
+	const title = document.querySelector('.home__title');
+	if (title) title.textContent = 'Hola, soy Fani';
+
+	// Asegura el cursor animado en el título
+	const homeTitleContainer = document.querySelector('.home__title-container');
 	if (
-		event.reason &&
-		event.reason.message &&
-		event.reason.message.includes(
-			'message channel closed before a response was received',
-		)
+		homeTitle &&
+		homeTitleContainer &&
+		!homeTitleContainer.querySelector('.home__title-cursor')
 	) {
-		// Prevenir que el error se muestre en la consola
-		event.preventDefault();
-		console.log(
-			'Mensaje de canal cerrado interceptado y manejado silenciosamente',
-		);
+		const cursor = document.createElement('span');
+		cursor.className = 'home__title-cursor';
+		title.after(cursor);
 	}
 });
