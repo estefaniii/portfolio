@@ -62,7 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function initTypingLoop() {
 	const title = document.querySelector('.home__title');
 	if (!title) return;
-	const text = 'Hola, soy Fani';
+	const text = window.location.pathname.includes('english.html')
+		? "Hello, I'm Fani"
+		: 'Hola, soy Fani';
 	let index = 0;
 	let isDeleting = false;
 
@@ -158,6 +160,51 @@ function initActiveMenu() {
 
 	window.addEventListener('hashchange', scrollActive);
 }
+
+// ===== NAVBAR SLIDER ANIMATION =====
+function initNavbarSlider() {
+	const navbarList = document.querySelector('.navbar__list');
+	const navbarLinks = document.querySelectorAll('.navbar__link');
+	if (!navbarList || !navbarLinks.length) return;
+
+	// Crear el slider si no existe
+	let slider = navbarList.querySelector('.navbar__slider');
+	if (!slider) {
+		slider = document.createElement('div');
+		slider.className = 'navbar__slider';
+		navbarList.appendChild(slider);
+	}
+
+	function moveSliderToActive() {
+		const activeLink = navbarList.querySelector('.navbar__link.active');
+		if (activeLink) {
+			const linkRect = activeLink.getBoundingClientRect();
+			const listRect = navbarList.getBoundingClientRect();
+			slider.style.left = linkRect.left - listRect.left + 'px';
+			slider.style.width = linkRect.width + 'px';
+			slider.style.opacity = 1;
+		} else {
+			slider.style.width = '0';
+			slider.style.opacity = 0;
+		}
+	}
+
+	// Mover el slider al cargar y al cambiar de sección
+	moveSliderToActive();
+	window.addEventListener('resize', moveSliderToActive);
+	document.addEventListener('scroll', moveSliderToActive, true);
+	window.addEventListener('hashchange', moveSliderToActive);
+
+	// Solo mover el slider cuando se hace clic en un enlace
+	navbarLinks.forEach((link) => {
+		link.addEventListener('click', () => {
+			setTimeout(moveSliderToActive, 100); // Espera a que se actualice la clase active
+		});
+	});
+}
+
+// Llamar a la función al cargar
+initNavbarSlider();
 
 // ===== CURRENT YEAR =====
 function updateCurrentYear() {
@@ -317,15 +364,21 @@ window.addEventListener('unhandledrejection', (event) => {
 	console.error('Promesa rechazada no capturada:', event.reason);
 });
 
-// ===== RESTAURAR TITULO HOME SIN EFECTO DE MAQUINA DE ESCRIBIR =====
+// ===== RESTAURAR TITULO HOME SEGÚN IDIOMA =====
 document.addEventListener('DOMContentLoaded', function () {
 	const title = document.querySelector('.home__title');
-	if (title) title.textContent = 'Hola, soy Fani';
+	if (title) {
+		if (window.location.pathname.includes('english.html')) {
+			title.textContent = "Hello, I'm Fani";
+		} else {
+			title.textContent = 'Hola, soy Fani';
+		}
+	}
 
 	// Asegura el cursor animado en el título
 	const homeTitleContainer = document.querySelector('.home__title-container');
 	if (
-		homeTitle &&
+		title &&
 		homeTitleContainer &&
 		!homeTitleContainer.querySelector('.home__title-cursor')
 	) {

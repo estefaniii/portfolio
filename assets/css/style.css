@@ -347,6 +347,24 @@ button {
 .navbar__list {
 	flex-direction: column;
 	row-gap: 2rem;
+	position: relative;
+}
+
+.navbar__slider {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 3px;
+	width: 0;
+	background: linear-gradient(
+		to right,
+		var(--primary-color),
+		var(--secondary-color)
+	);
+	border-radius: 3px;
+	transition: left 0.25s ease, width 0.25s ease;
+	z-index: 2;
+	pointer-events: none;
 }
 
 .navbar__link {
@@ -362,24 +380,23 @@ button {
 	content: '';
 	position: absolute;
 	width: 0;
-	height: 3px;
-	background: linear-gradient(
-		to right,
-		var(--primary-color),
-		var(--secondary-color)
-	);
-	bottom: -5px;
+	height: 0;
+	background: none;
+	bottom: 0;
 	left: 0;
-	transition: width 0.3s;
-	border-radius: 3px;
+	border-radius: 0;
+	transition: none;
+	display: none;
 }
 
 .navbar__link:hover {
 	color: var(--primary-color);
 }
 
-.navbar__link:hover::after {
-	width: 100%;
+.navbar__link:hover::after,
+.navbar__link.active::after {
+	width: 0 !important;
+	display: none !important;
 }
 
 .navbar__link.active {
@@ -1837,7 +1854,7 @@ button {
 
 .footer__social-link i {
 	font-size: 1.5rem;
-	color: var(--title-color);
+	color: #fff !important;
 	background: none !important;
 	border-radius: 0 !important;
 	box-shadow: none !important;
@@ -1845,7 +1862,7 @@ button {
 }
 
 .footer__social-link:hover i {
-	color: var(--primary-color);
+	color: var(--primary-color) !important;
 	transform: scale(1.15);
 }
 
