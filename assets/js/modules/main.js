@@ -365,22 +365,62 @@ function initSkillsCarousel() {
 	const nextButton = document.querySelector('.skills__nav-button--next');
 	if (!track || !prevButton || !nextButton) return;
 
-	// avanzar casi una pantalla del carrusel por clic
-	const step = () => Math.max(track.clientWidth * 0.8, 150);
+	const DELAY = 2500;
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	let timer = null;
+	let paused = false;
 
-	function updateButtons() {
-		// margen de unos píxeles por el ajuste del scroll-snap
-		const max = track.scrollWidth - track.clientWidth - 8;
-		prevButton.disabled = track.scrollLeft <= 8;
-		nextButton.disabled = track.scrollLeft >= max;
+	// una tarjeta más el espacio entre tarjetas
+	function step() {
+		const card = track.querySelector('.skills__cards-container');
+		const gap = parseFloat(getComputedStyle(track).gap) || 0;
+		return card ? card.offsetWidth + gap : 140;
 	}
 
-	prevButton.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-	nextButton.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
-	track.addEventListener('scroll', updateButtons, { passive: true });
-	window.addEventListener('resize', updateButtons);
-	window.addEventListener('load', updateButtons);
-	updateButtons();
+	// al llegar a un extremo, da la vuelta al otro
+	function move(direction) {
+		const max = track.scrollWidth - track.clientWidth - 8;
+		if (direction > 0 && track.scrollLeft >= max) {
+			track.scrollTo({ left: 0, behavior: 'smooth' });
+		} else if (direction < 0 && track.scrollLeft <= 8) {
+			track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+		} else {
+			track.scrollBy({ left: direction * step(), behavior: 'smooth' });
+		}
+	}
+
+	function start() {
+		if (reduceMotion || timer) return;
+		timer = setInterval(() => {
+			if (!paused && !document.hidden && !track.querySelector('details[open]')) move(1);
+		}, DELAY);
+	}
+
+	function restart() {
+		clearInterval(timer);
+		timer = null;
+		start();
+	}
+
+	prevButton.addEventListener('click', () => {
+		move(-1);
+		restart();
+	});
+	nextButton.addEventListener('click', () => {
+		move(1);
+		restart();
+	});
+
+	// pausar mientras la persona mira o toca el carrusel
+	const carousel = track.closest('.skills__carousel') || track;
+	carousel.addEventListener('mouseenter', () => (paused = true));
+	carousel.addEventListener('mouseleave', () => (paused = false));
+	carousel.addEventListener('focusin', () => (paused = true));
+	carousel.addEventListener('focusout', () => (paused = false));
+	track.addEventListener('touchstart', () => (paused = true), { passive: true });
+	track.addEventListener('touchend', () => setTimeout(() => (paused = false), 3000), { passive: true });
+
+	start();
 }
 
 // Manejar errores no capturados
