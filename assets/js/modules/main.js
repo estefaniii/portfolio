@@ -8,11 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Inicializar cambio de idioma
 	initLanguageToggle();
 
-	// Inicializar navegación de proyectos
-	initProjectsNavigation();
+	// Inicializar carrusel de proyectos
+	initAutoCarousel({
+		track: document.querySelector('.projects__container'),
+		prevButton: document.querySelector('.projects__nav-button--prev'),
+		nextButton: document.querySelector('.projects__nav-button--next'),
+		speed: 18,
+	});
 
 	// Inicializar carrusel de herramientas
-	initSkillsCarousel();
+	initAutoCarousel({
+		track: document.querySelector('.skills__tech'),
+		prevButton: document.querySelector('.skills__nav-button--prev'),
+		nextButton: document.querySelector('.skills__nav-button--next'),
+		speed: 22,
+		keepColors: true,
+	});
 
 	// Inicializar parallax
 	// initParallax();
@@ -326,46 +337,11 @@ function initLanguageToggle() {
 	});
 }
 
-// ===== PROJECTS NAVIGATION =====
-function initProjectsNavigation() {
-	const projectsContainer = document.querySelector('.projects__container');
-	if (!projectsContainer) return;
-
-	// Usar solo las flechas del HTML
-	const prevButton = document.querySelector('.projects__nav-button--prev');
-	const nextButton = document.querySelector('.projects__nav-button--next');
-
-	function getProjectScrollAmount() {
-		const project = projectsContainer.querySelector('.projects__project');
-		if (!project) return projectsContainer.offsetWidth;
-		const style = window.getComputedStyle(project);
-		const gap =
-			parseFloat(style.marginRight) ||
-			parseFloat(getComputedStyle(projectsContainer).gap) ||
-			0;
-		return project.offsetWidth + gap;
-	}
-
-	if (prevButton && nextButton) {
-		prevButton.addEventListener('click', () => {
-			const scrollAmount = getProjectScrollAmount();
-			projectsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-		});
-		nextButton.addEventListener('click', () => {
-			const scrollAmount = getProjectScrollAmount();
-			projectsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-		});
-	}
-}
-
-// ===== SKILLS CAROUSEL =====
-function initSkillsCarousel() {
-	const track = document.querySelector('.skills__tech');
-	const prevButton = document.querySelector('.skills__nav-button--prev');
-	const nextButton = document.querySelector('.skills__nav-button--next');
+// ===== CARRUSEL CONTINUO (herramientas y proyectos) =====
+// speed: píxeles por segundo, para un movimiento suave y lento
+function initAutoCarousel({ track, prevButton, nextButton, speed, keepColors = false }) {
 	if (!track || !prevButton || !nextButton) return;
 
-	const SPEED = 0.35; // píxeles por cuadro: movimiento suave y lento
 	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	const originals = [...track.children];
 	let paused = false;
@@ -375,7 +351,7 @@ function initSkillsCarousel() {
 	const clones = originals.map((card) => {
 		const clone = card.cloneNode(true);
 		clone.setAttribute('aria-hidden', 'true');
-		clone.querySelector('summary')?.setAttribute('tabindex', '-1');
+		clone.querySelectorAll('summary, a, button').forEach((el) => el.setAttribute('tabindex', '-1'));
 		track.appendChild(clone);
 		return clone;
 	});
@@ -389,8 +365,10 @@ function initSkillsCarousel() {
 			clone.querySelector('.skills__cards-title').style.color = getComputedStyle(title).color;
 		});
 	}
-	copyColors();
-	document.getElementById('darkmode-toggle')?.addEventListener('change', () => setTimeout(copyColors, 50));
+	if (keepColors) {
+		copyColors();
+		document.getElementById('darkmode-toggle')?.addEventListener('change', () => setTimeout(copyColors, 50));
+	}
 
 	const half = () => track.scrollWidth / 2;
 	let position = 0;
@@ -401,9 +379,13 @@ function initSkillsCarousel() {
 		track.scrollLeft = position;
 	}
 
-	function tick() {
+	let last = performance.now();
+	function tick(now) {
+		// el avance depende del tiempo, no de los cuadros: igual en pantallas de 60 o 120 Hz
+		const dt = Math.min((now - last) / 1000, 0.1);
+		last = now;
 		if (!paused && !document.hidden && !track.querySelector('details[open]')) {
-			position += SPEED;
+			position += speed * dt;
 			wrap();
 		}
 		requestAnimationFrame(tick);
@@ -444,7 +426,7 @@ function initSkillsCarousel() {
 		if (paused) position = track.scrollLeft;
 	}, { passive: true });
 
-	const carousel = track.closest('.skills__carousel') || track;
+	const carousel = track.parentElement || track;
 	carousel.addEventListener('mouseenter', () => {
 		clearTimeout(resumeTimer);
 		paused = true;

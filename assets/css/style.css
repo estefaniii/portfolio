@@ -2510,3 +2510,68 @@ button {
 	outline: 2px solid var(--primary-color);
 	outline-offset: 2px;
 }
+
+/* Fotos de Acerca de Mí en celular: dos lado a lado y la tercera centrada debajo */
+@media (max-width: 576px) {
+	.about__cards {
+		display: grid !important;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+		width: 100%;
+	}
+	.about__card {
+		width: 100% !important;
+		height: auto !important;
+		aspect-ratio: 3 / 4;
+	}
+	.about__card:nth-child(3) {
+		grid-column: 1 / -1;
+		justify-self: center;
+		width: calc(50% - 0.375rem) !important;
+	}
+}
+
+/* Proyectos en carrusel continuo: sin imán entre tarjetas y letras proporcionadas */
+.projects__container {
+	scroll-snap-type: none !important;
+	scroll-behavior: auto !important;
+}
+.projects__project {
+	scroll-snap-align: none;
+}
+.projects__name {
+	font-size: 1.1rem !important;
+}
+.projects__description {
+	font-size: 0.9rem !important;
+	line-height: 1.55 !important;
+}
+.projects__button {
+	font-size: 0.82rem !important;
+	padding: 0.65rem 1.3rem !important;
+	white-space: nowrap;
+	gap: 0.4rem;
+}
+@media (max-width: 576px) {
+	.projects__project {
+		flex: 0 0 78% !important;
+		min-width: 78% !important;
+		max-width: 78% !important;
+	}
+	.projects__info {
+		padding: 1rem 0.9rem 1.1rem !important;
+	}
+	.projects__name {
+		font-size: 1rem !important;
+	}
+	.projects__description {
+		font-size: 0.82rem !important;
+	}
+	.projects__button {
+		font-size: 0.75rem !important;
+		padding: 0.55rem 1.1rem !important;
+	}
+	.projects__image {
+		height: 130px !important;
+	}
+}
