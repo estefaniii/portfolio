@@ -2908,3 +2908,69 @@ button {
 	text-align: left !important;
 	line-height: 1.7;
 }
+
+/* Formulario: campos más compactos, espaciado parejo y 16 px para que iPhone no haga zoom */
+.contact__form-title {
+	margin-bottom: 1.25rem !important;
+}
+.contact__form-container {
+	display: grid !important;
+	grid-template-columns: 1fr;
+	gap: 1rem !important;
+}
+.contact__form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+	margin: 0 !important;
+}
+.contact__form-label {
+	margin: 0 !important;
+	font-size: 0.85rem !important;
+	font-weight: 500;
+	color: var(--title-color);
+}
+.contact__form-input {
+	width: 100%;
+	min-height: 0 !important;
+	height: auto !important;
+	padding: 0.75rem 0.95rem !important;
+	font-size: 16px !important;
+	line-height: 1.4;
+	border: 1px solid var(--border-color) !important;
+	border-radius: 0.75rem !important;
+	box-shadow: none !important;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+.contact__form-input:focus {
+	outline: none;
+	border-color: var(--primary-color) !important;
+	box-shadow: 0 0 0 3px rgba(182, 123, 192, 0.25) !important;
+}
+textarea.contact__form-input {
+	min-height: 140px !important;
+	height: 140px !important;
+	resize: vertical;
+}
+.contact__form-button {
+	justify-self: start;
+	margin: 0.25rem 0 0 !important;
+	padding: 0.8rem 1.75rem !important;
+	font-size: 0.95rem !important;
+}
+@media (min-width: 577px) {
+	.contact__form-container {
+		grid-template-columns: 1fr 1fr;
+	}
+	.contact__form-group:nth-of-type(3),
+	.contact__form-group:nth-of-type(4),
+	.contact__form-button {
+		grid-column: 1 / -1;
+	}
+}
+@media (max-width: 576px) {
+	.contact__form-button {
+		justify-self: stretch;
+		justify-content: center;
+	}
+}
