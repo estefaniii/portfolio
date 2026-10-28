@@ -2290,10 +2290,13 @@ button {
 .skills__cards-container:nth-child(20) { border-color: #d97757; }
 .skills__cards-container:nth-child(20) .skills__cards-title { color: #e8916f; }
 
-/* Celular: menos espacio muerto, habilidades en 2 columnas y contacto sin desbordes */
+/* Celular: menos espacio muerto y contacto sin desbordes */
 .contact__info-item > span,
 .contact__info-item a {
 	min-width: 0;
+	overflow-wrap: break-word;
+}
+.contact__info-mail a {
 	overflow-wrap: anywhere;
 }
 .contact__info-item i {
@@ -2306,28 +2309,6 @@ button {
 	}
 	.section__title {
 		margin-bottom: 2.5rem;
-	}
-	.skills__tags-container {
-		display: grid !important;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 0.75rem;
-		align-items: start;
-	}
-	.skills__cards-container {
-		width: 100% !important;
-	}
-	.skills__cards-container[open] {
-		grid-column: 1 / -1;
-	}
-	.skills__cards-title {
-		padding: 1rem 0.5rem;
-		flex-direction: column;
-		gap: 0.35rem;
-		font-size: 0.9rem;
-		text-align: center;
-	}
-	.skills__cards-title i {
-		font-size: 2.1rem;
 	}
 	.contact__info-item {
 		gap: 1rem;
@@ -2343,21 +2324,118 @@ button {
 		padding: 6rem 0 4rem;
 		min-height: auto;
 	}
-	.skills__tags-container {
-		display: grid !important;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1rem;
-		align-items: start;
-	}
-	.skills__cards-container {
-		width: 100% !important;
-	}
-	.skills__cards-container[open] {
-		grid-column: 1 / -1;
-	}
 }
 
 /* Tarjetas de proyecto: cada una con su propia altura, sin hueco vacío bajo el texto */
 .projects__container {
 	align-items: flex-start !important;
+}
+
+/* Herramientas en carrusel tipo pasarela, con las dos flechas juntas debajo */
+.skills__tags-container.skills__tech {
+	display: flex !important;
+	flex-wrap: nowrap !important;
+	justify-content: flex-start !important;
+	align-items: flex-start;
+	gap: 1rem;
+	width: 100%;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	padding: 1rem 0.25rem 0.5rem;
+	scrollbar-width: none;
+}
+.skills__tech::-webkit-scrollbar {
+	display: none;
+}
+.skills__tech .skills__cards-container {
+	flex: 0 0 200px;
+	width: 200px !important;
+	scroll-snap-align: start;
+}
+.skills__tech .skills__cards-container:hover {
+	transform: translateY(-4px);
+}
+.skills__nav {
+	justify-content: center;
+	gap: 1rem;
+	margin-top: 1.25rem;
+}
+.skills__nav-button {
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.8rem;
+	color: var(--primary-color);
+	background: var(--container-color);
+	border: 2px solid var(--primary-color);
+	box-shadow: 0 2px 10px rgba(142, 68, 173, 0.13);
+	cursor: pointer;
+	transition: all 0.2s;
+}
+.skills__nav-button:hover:not(:disabled) {
+	color: #fff;
+	background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+.skills__nav-button:disabled {
+	opacity: 0.35;
+	cursor: default;
+}
+@media (max-width: 576px) {
+	.skills__tech .skills__cards-container {
+		flex-basis: 150px;
+		width: 150px !important;
+	}
+	.skills__tech .skills__cards-title {
+		padding: 1rem 0.5rem;
+		flex-direction: column;
+		gap: 0.35rem;
+		font-size: 0.9rem;
+		text-align: center;
+	}
+	.skills__tech .skills__cards-title i {
+		font-size: 2.1rem;
+	}
+}
+
+/* Pantallas angostas (celulares pequeños y ventanas estrechas) */
+.home__image-container {
+	width: min(320px, 78vw) !important;
+	height: min(320px, 78vw) !important;
+}
+@media (max-width: 576px) {
+	.contact__info,
+	.contact__form {
+		padding: 1.75rem 1.25rem !important;
+	}
+}
+@media (max-width: 576px) {
+	.skills__tags {
+		padding: 1.5rem 1rem;
+		margin-top: 2rem;
+	}
+}
+@media (max-width: 400px) {
+	.navbar {
+		padding: 0 0.75rem !important;
+	}
+	.navbar__logo {
+		font-size: 1.05rem;
+		padding: 0.4rem 0.5rem;
+	}
+	.navbar__toggles {
+		gap: 0.5rem;
+	}
+	.navbar__toggle--darkmode-label,
+	.navbar__toggle--language-label {
+		width: 44px;
+	}
+	.home__social {
+		gap: 0.75rem !important;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
 }

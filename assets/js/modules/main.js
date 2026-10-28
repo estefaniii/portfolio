@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Inicializar navegación de proyectos
 	initProjectsNavigation();
 
+	// Inicializar carrusel de herramientas
+	initSkillsCarousel();
+
 	// Inicializar parallax
 	// initParallax();
 
@@ -353,6 +356,31 @@ function initProjectsNavigation() {
 			projectsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
 		});
 	}
+}
+
+// ===== SKILLS CAROUSEL =====
+function initSkillsCarousel() {
+	const track = document.querySelector('.skills__tech');
+	const prevButton = document.querySelector('.skills__nav-button--prev');
+	const nextButton = document.querySelector('.skills__nav-button--next');
+	if (!track || !prevButton || !nextButton) return;
+
+	// avanzar casi una pantalla del carrusel por clic
+	const step = () => Math.max(track.clientWidth * 0.8, 150);
+
+	function updateButtons() {
+		// margen de unos píxeles por el ajuste del scroll-snap
+		const max = track.scrollWidth - track.clientWidth - 8;
+		prevButton.disabled = track.scrollLeft <= 8;
+		nextButton.disabled = track.scrollLeft >= max;
+	}
+
+	prevButton.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+	nextButton.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+	track.addEventListener('scroll', updateButtons, { passive: true });
+	window.addEventListener('resize', updateButtons);
+	window.addEventListener('load', updateButtons);
+	updateButtons();
 }
 
 // Manejar errores no capturados
