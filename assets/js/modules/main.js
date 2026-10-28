@@ -233,40 +233,53 @@ function initSendEmail() {
 	const formDOM = document.querySelector('#form');
 	const modalDOM = document.querySelector('#modal');
 	const buttonCloseDOM = document.querySelector('#btn_close-modal');
-
 	if (!formDOM) return;
 
-	formDOM.addEventListener('submit', (e) => {
+	const isEnglish = window.location.pathname.includes('english.html');
+	const submitButton = formDOM.querySelector('button[type="submit"]');
+	const buttonHTML = submitButton ? submitButton.innerHTML : '';
+
+	// FormSubmit envía el mensaje al correo de la página sin salir del sitio
+	formDOM.addEventListener('submit', async (e) => {
 		e.preventDefault();
-		const params = {
-			name: document.getElementById('name')?.value || '',
-			email: document.getElementById('email')?.value || '',
-			subject: document.getElementById('subject')?.value || '',
-			message: document.getElementById('message')?.value || '',
+		const data = new FormData(formDOM);
+		if (data.get('_honey')) return; // relleno automático de bots
+
+		const payload = {
+			name: data.get('name'),
+			email: data.get('email'),
+			message: data.get('message'),
+			_subject: `Portafolio: ${data.get('subject')}`,
+			_replyto: data.get('email'),
+			_template: 'table',
 		};
 
-		if (params.name && params.email && params.subject && params.message) {
-			if (typeof emailjs !== 'undefined') {
-				emailjs
-					.send('service_bf8pegn', 'template_991ymha', params)
-					.then((response) => {
-						console.log('SUCCESS!', response.status, response.text);
-						if (modalDOM) modalDOM.showModal();
-						formDOM.reset();
-					})
-					.catch((error) => {
-						console.log('FAILED...', error);
-						alert(
-							'Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.',
-						);
-					});
-			} else {
-				console.log('EmailJS no está disponible');
-				if (modalDOM) modalDOM.showModal();
-				formDOM.reset();
+		if (submitButton) {
+			submitButton.disabled = true;
+			submitButton.textContent = isEnglish ? 'Sending…' : 'Enviando…';
+		}
+		try {
+			const response = await fetch(formDOM.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+				body: JSON.stringify(payload),
+			});
+			const result = await response.json().catch(() => ({}));
+			if (!response.ok || String(result.success) === 'false') throw new Error(result.message || response.status);
+			if (modalDOM) modalDOM.showModal();
+			formDOM.reset();
+		} catch (error) {
+			console.error('Error al enviar el formulario:', error);
+			alert(
+				isEnglish
+					? 'The message could not be sent. Please try again or write to estefanidelosangelestorres@gmail.com.'
+					: 'No se pudo enviar el mensaje. Inténtalo de nuevo o escribe a estefanidelosangelestorres@gmail.com.',
+			);
+		} finally {
+			if (submitButton) {
+				submitButton.disabled = false;
+				submitButton.innerHTML = buttonHTML;
 			}
-		} else {
-			alert('Por favor, completa todos los campos del formulario.');
 		}
 	});
 

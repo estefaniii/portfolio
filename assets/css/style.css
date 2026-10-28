@@ -2610,3 +2610,31 @@ button {
 		margin-top: 0.5rem !important;
 	}
 }
+
+/* Formulario: campo trampa invisible para bots */
+.contact__form-honey {
+	position: absolute !important;
+	left: -9999px !important;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+}
+.contact__form-button:disabled {
+	opacity: 0.7;
+	cursor: wait;
+}
+
+/* Carrusel de herramientas: espacio para la sombra y márgenes parejos */
+.skills__tags-container.skills__tech {
+	padding: 0.5rem 0.25rem 1.25rem !important;
+}
+.skills__tech .skills__cards-container {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+.skills__container > .skills__tags:first-child {
+	padding-top: 1.25rem;
+	padding-bottom: 1rem;
+}
+.skills__nav {
+	bottom: 0.75rem;
+}

@@ -30,16 +30,6 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="assets/img/d.png" type="image/png" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <!-- Integración de email JS-->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-  </script>
-  <script type="text/javascript">
-    (function () {
-      emailjs.init({
-        publicKey: "vaHVs7gXtZ5hWi7en",
-      });
-    })();
-  </script>
 </head>
 
 <body>
@@ -810,26 +800,27 @@
         </div>
         <div class="contact__form">
           <h3 class="contact__form-title">Enviar mensaje</h3>
-          <form id="form" class="contact__form-container">
+          <form id="form" class="contact__form-container" action="https://formsubmit.co/estefanidelosangelestorres@gmail.com" method="POST">
+            <input type="text" name="_honey" class="contact__form-honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <div class="contact__form-group">
               <label for="name" class="contact__form-label">Nombre</label>
-              <input type="text" id="name" name="name" class="contact__form-input" autocomplete="name" />
+              <input type="text" id="name" name="name" class="contact__form-input" autocomplete="name" required />
             </div>
 
             <div class="contact__form-group">
               <label for="email" class="contact__form-label">Correo</label>
-              <input type="email" id="email" name="email" class="contact__form-input" autocomplete="email" />
+              <input type="email" id="email" name="email" class="contact__form-input" autocomplete="email" required />
             </div>
 
             <div class="contact__form-group">
               <label for="subject" class="contact__form-label">Asunto</label>
-              <input type="text" id="subject" name="subject" class="contact__form-input" autocomplete="off" />
+              <input type="text" id="subject" name="subject" class="contact__form-input" autocomplete="off" required />
             </div>
 
             <div class="contact__form-group">
               <label for="message" class="contact__form-label">Mensaje</label>
               <textarea id="message" name="message" cols="30" rows="10" class="contact__form-input"
-                autocomplete="off"></textarea>
+                autocomplete="off" required></textarea>
             </div>
             <dialog class="contact__form-modal" id="modal">
               Formulario enviado con éxito!
