@@ -2345,8 +2345,7 @@ button {
 	gap: 0.75rem;
 	width: 100%;
 	overflow-x: auto;
-	scroll-snap-type: x mandatory;
-	scroll-behavior: smooth;
+	scroll-behavior: auto;
 	padding: 0.75rem 0.25rem;
 	scrollbar-width: none;
 }
@@ -2356,7 +2355,6 @@ button {
 .skills__tech .skills__cards-container {
 	flex: 0 0 140px;
 	width: 140px !important;
-	scroll-snap-align: start;
 }
 .skills__tech .skills__cards-title {
 	padding: 0.9rem 0.5rem;
@@ -2475,4 +2473,40 @@ button {
 		min-height: 3.2rem;
 		max-width: 100%;
 	}
+}
+
+/* Tema: un solo botón pequeño (luna en modo claro, sol en modo oscuro) */
+.navbar__toggle--darkmode-label {
+	width: 32px !important;
+	height: 32px !important;
+	padding: 0 !important;
+	justify-content: center !important;
+	background: transparent !important;
+	border: 1px solid var(--border-color);
+	border-radius: 50%;
+	transition: border-color 0.2s;
+}
+.navbar__toggle--darkmode-label:hover {
+	border-color: var(--primary-color);
+}
+.navbar__toggle--darkmode-label::after {
+	display: none;
+}
+.navbar__toggle--darkmode-sun,
+.navbar__toggle--darkmode-moon {
+	font-size: 1.15rem;
+	color: var(--primary-color);
+}
+.navbar__toggle--darkmode-sun {
+	display: none;
+}
+.navbar__toggle--darkmode-input:checked + .navbar__toggle--darkmode-label .navbar__toggle--darkmode-sun {
+	display: block;
+}
+.navbar__toggle--darkmode-input:checked + .navbar__toggle--darkmode-label .navbar__toggle--darkmode-moon {
+	display: none;
+}
+.navbar__toggle--darkmode-input:focus-visible + .navbar__toggle--darkmode-label {
+	outline: 2px solid var(--primary-color);
+	outline-offset: 2px;
 }

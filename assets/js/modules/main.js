@@ -365,62 +365,98 @@ function initSkillsCarousel() {
 	const nextButton = document.querySelector('.skills__nav-button--next');
 	if (!track || !prevButton || !nextButton) return;
 
-	const DELAY = 2500;
+	const SPEED = 0.35; // píxeles por cuadro: movimiento suave y lento
 	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-	let timer = null;
+	const originals = [...track.children];
 	let paused = false;
+	let resumeTimer = null;
 
-	// una tarjeta más el espacio entre tarjetas
-	function step() {
-		const card = track.querySelector('.skills__cards-container');
-		const gap = parseFloat(getComputedStyle(track).gap) || 0;
-		return card ? card.offsetWidth + gap : 140;
+	// segunda copia de las tarjetas para que el final empalme con el inicio
+	const clones = originals.map((card) => {
+		const clone = card.cloneNode(true);
+		clone.setAttribute('aria-hidden', 'true');
+		clone.querySelector('summary')?.setAttribute('tabindex', '-1');
+		track.appendChild(clone);
+		return clone;
+	});
+
+	// las copias quedan fuera de las reglas :nth-child, así que heredan el color de su original
+	function copyColors() {
+		clones.forEach((clone, i) => {
+			const original = originals[i];
+			clone.style.borderColor = getComputedStyle(original).borderTopColor;
+			const title = original.querySelector('.skills__cards-title');
+			clone.querySelector('.skills__cards-title').style.color = getComputedStyle(title).color;
+		});
+	}
+	copyColors();
+	document.getElementById('darkmode-toggle')?.addEventListener('change', () => setTimeout(copyColors, 50));
+
+	const half = () => track.scrollWidth / 2;
+	let position = 0;
+
+	function wrap() {
+		if (position >= half()) position -= half();
+		if (position < 0) position += half();
+		track.scrollLeft = position;
 	}
 
-	// al llegar a un extremo, da la vuelta al otro
-	function move(direction) {
-		const max = track.scrollWidth - track.clientWidth - 8;
-		if (direction > 0 && track.scrollLeft >= max) {
-			track.scrollTo({ left: 0, behavior: 'smooth' });
-		} else if (direction < 0 && track.scrollLeft <= 8) {
-			track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
-		} else {
-			track.scrollBy({ left: direction * step(), behavior: 'smooth' });
+	function tick() {
+		if (!paused && !document.hidden && !track.querySelector('details[open]')) {
+			position += SPEED;
+			wrap();
 		}
+		requestAnimationFrame(tick);
 	}
 
-	function start() {
-		if (reduceMotion || timer) return;
-		timer = setInterval(() => {
-			if (!paused && !document.hidden && !track.querySelector('details[open]')) move(1);
-		}, DELAY);
+	function step() {
+		const card = originals[0];
+		const gap = parseFloat(getComputedStyle(track).gap) || 0;
+		return card.offsetWidth + gap;
 	}
 
-	function restart() {
-		clearInterval(timer);
-		timer = null;
-		start();
+	// las flechas mueven una tarjeta con una pequeña animación y luego sigue el movimiento
+	function nudge(direction) {
+		paused = true;
+		const from = position;
+		const to = position + direction * step();
+		const start = performance.now();
+		function animate(now) {
+			const t = Math.min((now - start) / 350, 1);
+			position = from + (to - from) * (1 - Math.pow(1 - t, 3));
+			wrap();
+			if (t < 1) requestAnimationFrame(animate);
+			else pauseFor(1500);
+		}
+		requestAnimationFrame(animate);
 	}
 
-	prevButton.addEventListener('click', () => {
-		move(-1);
-		restart();
-	});
-	nextButton.addEventListener('click', () => {
-		move(1);
-		restart();
-	});
+	function pauseFor(ms) {
+		clearTimeout(resumeTimer);
+		resumeTimer = setTimeout(() => (paused = false), ms);
+	}
 
-	// pausar mientras la persona mira o toca el carrusel
+	prevButton.addEventListener('click', () => nudge(-1));
+	nextButton.addEventListener('click', () => nudge(1));
+
+	// si la persona desliza con el dedo, seguir desde donde lo dejó
+	track.addEventListener('scroll', () => {
+		if (paused) position = track.scrollLeft;
+	}, { passive: true });
+
 	const carousel = track.closest('.skills__carousel') || track;
-	carousel.addEventListener('mouseenter', () => (paused = true));
-	carousel.addEventListener('mouseleave', () => (paused = false));
-	carousel.addEventListener('focusin', () => (paused = true));
-	carousel.addEventListener('focusout', () => (paused = false));
-	track.addEventListener('touchstart', () => (paused = true), { passive: true });
-	track.addEventListener('touchend', () => setTimeout(() => (paused = false), 3000), { passive: true });
+	carousel.addEventListener('mouseenter', () => {
+		clearTimeout(resumeTimer);
+		paused = true;
+	});
+	carousel.addEventListener('mouseleave', () => pauseFor(300));
+	track.addEventListener('touchstart', () => {
+		clearTimeout(resumeTimer);
+		paused = true;
+	}, { passive: true });
+	track.addEventListener('touchend', () => pauseFor(2500), { passive: true });
 
-	start();
+	if (!reduceMotion) requestAnimationFrame(tick);
 }
 
 // Manejar errores no capturados
