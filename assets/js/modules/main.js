@@ -224,7 +224,7 @@ initNavbarSlider();
 function updateCurrentYear() {
 	const currentYearDOM = document.querySelector('#currentyear');
 	if (currentYearDOM) {
-		currentYearDOM.textContent = `@${new Date().getFullYear()}`;
+		currentYearDOM.textContent = `© ${new Date().getFullYear()} Estéfani Torres.`;
 	}
 }
 

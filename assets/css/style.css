@@ -2326,9 +2326,31 @@ button {
 	}
 }
 
-/* Tarjetas de proyecto: cada una con su propia altura, sin hueco vacío bajo el texto */
+/* Tarjetas de proyecto: todas del mismo alto, con imagen, título y botón alineados */
 .projects__container {
-	align-items: flex-start !important;
+	align-items: stretch !important;
+}
+.projects__project {
+	display: flex !important;
+	flex-direction: column;
+	min-height: 0 !important;
+}
+.projects__inner {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+.projects__image {
+	flex-shrink: 0;
+}
+.projects__info {
+	display: flex !important;
+	flex-direction: column;
+	flex: 1;
+}
+.projects__buttons {
+	margin-top: auto !important;
+	padding-top: 0.75rem;
 }
 
 /* Herramientas en carrusel automático, con flechas pequeñas a los lados */
@@ -2573,5 +2595,18 @@ button {
 	}
 	.projects__image {
 		height: 130px !important;
+	}
+}
+
+/* Portada en celular: menos aire entre foto, iconos y título */
+@media (max-width: 576px) {
+	.home__container {
+		gap: 1.25rem !important;
+	}
+	.home__image-container {
+		margin-top: 2.5rem !important;
+	}
+	.home__social {
+		margin-top: 0.5rem !important;
 	}
 }
