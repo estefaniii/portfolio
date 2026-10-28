@@ -2644,3 +2644,89 @@ button {
 	margin: auto;
 	max-width: calc(100% - 2rem);
 }
+
+/* Proyectos: ancho de tarjeta y separación parejos en todos los tamaños */
+.projects__container {
+	gap: 1rem !important;
+}
+.projects__project {
+	margin: 0 0 1.5rem 0 !important;
+}
+.projects__name {
+	overflow-wrap: break-word;
+	hyphens: auto;
+	line-height: 1.25;
+}
+@media (max-width: 400px) {
+	.projects__carousel-wrapper {
+		padding: 0 1.9rem !important;
+	}
+	.projects__project {
+		flex: 0 0 86% !important;
+		min-width: 86% !important;
+		max-width: 86% !important;
+	}
+	.projects__nav-button {
+		width: 32px !important;
+		height: 32px !important;
+		font-size: 1.4rem !important;
+	}
+}
+@media (min-width: 577px) and (max-width: 767px) {
+	.projects__project {
+		flex: 0 0 70% !important;
+		min-width: 70% !important;
+		max-width: 70% !important;
+	}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	.projects__project {
+		flex: 0 0 calc(50% - 0.5rem) !important;
+		min-width: calc(50% - 0.5rem) !important;
+		max-width: calc(50% - 0.5rem) !important;
+	}
+}
+@media (min-width: 577px) and (max-width: 991px) {
+	.projects__info {
+		padding: 1.1rem 1rem 1.2rem !important;
+	}
+	.projects__image {
+		height: 160px !important;
+	}
+}
+@media (min-width: 992px) {
+	.projects__project {
+		flex: 0 0 calc((100% - 2rem) / 3) !important;
+		min-width: calc((100% - 2rem) / 3) !important;
+		max-width: calc((100% - 2rem) / 3) !important;
+	}
+	.projects__info {
+		padding: 1.4rem 1.3rem 1.4rem !important;
+	}
+	.projects__image {
+		height: 210px !important;
+	}
+}
+
+/* Descripciones de proyecto a 4 líneas y botones en fila, para tarjetas compactas e iguales */
+.projects__description {
+	display: -webkit-box !important;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden !important;
+	min-height: 0 !important;
+	flex-grow: 0 !important;
+	margin-bottom: 0.5rem !important;
+}
+.projects__buttons {
+	display: flex !important;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.5rem !important;
+}
+.projects__buttons .projects__button {
+	flex: 0 1 auto;
+	margin: 0 !important;
+	min-width: 0 !important;
+	padding: 0.6rem 1rem !important;
+}
