@@ -2271,3 +2271,93 @@ button {
 		min-width: calc(100% - 1rem) !important;
 	}
 }
+
+/* Herramientas nuevas: color de cada marca */
+.skills__cards-container:nth-child(13) { border-color: #21759b; }
+.skills__cards-container:nth-child(13) .skills__cards-title { color: #3d9bd1; }
+.skills__cards-container:nth-child(14) { border-color: #92003b; }
+.skills__cards-container:nth-child(14) .skills__cards-title { color: #e2357a; }
+.skills__cards-container:nth-child(15) { border-color: #5a67d8; }
+.skills__cards-container:nth-child(15) .skills__cards-title { color: #8b95f0; }
+.skills__cards-container:nth-child(16) { border-color: #3ecf8e; }
+.skills__cards-container:nth-child(16) .skills__cards-title { color: #3ecf8e; }
+.skills__cards-container:nth-child(17) { border-color: #635bff; }
+.skills__cards-container:nth-child(17) .skills__cards-title { color: #8f89ff; }
+.skills__cards-container:nth-child(18) { border-color: #00c7b7; }
+.skills__cards-container:nth-child(18) .skills__cards-title { color: #00c7b7; }
+.skills__cards-container:nth-child(19) { border-color: #00c4cc; }
+.skills__cards-container:nth-child(19) .skills__cards-title { color: #20d3da; }
+.skills__cards-container:nth-child(20) { border-color: #d97757; }
+.skills__cards-container:nth-child(20) .skills__cards-title { color: #e8916f; }
+
+/* Celular: menos espacio muerto, habilidades en 2 columnas y contacto sin desbordes */
+.contact__info-item > span,
+.contact__info-item a {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+.contact__info-item i {
+	flex-shrink: 0;
+}
+@media (max-width: 576px) {
+	.section {
+		padding: 5rem 0 3rem;
+		min-height: auto;
+	}
+	.section__title {
+		margin-bottom: 2.5rem;
+	}
+	.skills__tags-container {
+		display: grid !important;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+		align-items: start;
+	}
+	.skills__cards-container {
+		width: 100% !important;
+	}
+	.skills__cards-container[open] {
+		grid-column: 1 / -1;
+	}
+	.skills__cards-title {
+		padding: 1rem 0.5rem;
+		flex-direction: column;
+		gap: 0.35rem;
+		font-size: 0.9rem;
+		text-align: center;
+	}
+	.skills__cards-title i {
+		font-size: 2.1rem;
+	}
+	.contact__info-item {
+		gap: 1rem;
+	}
+	.contact__info-number,
+	.contact__info-mail,
+	.contact__info-map {
+		font-size: 0.85rem;
+	}
+}
+@media (min-width: 577px) and (max-width: 991px) {
+	.section {
+		padding: 6rem 0 4rem;
+		min-height: auto;
+	}
+	.skills__tags-container {
+		display: grid !important;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+		align-items: start;
+	}
+	.skills__cards-container {
+		width: 100% !important;
+	}
+	.skills__cards-container[open] {
+		grid-column: 1 / -1;
+	}
+}
+
+/* Tarjetas de proyecto: cada una con su propia altura, sin hueco vacío bajo el texto */
+.projects__container {
+	align-items: flex-start !important;
+}
