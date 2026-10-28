@@ -2638,3 +2638,9 @@ button {
 .skills__nav {
 	bottom: 0.75rem;
 }
+
+/* Aviso de envío centrado (el reset global de márgenes lo pegaba arriba a la izquierda) */
+.contact__form-modal[open] {
+	margin: auto;
+	max-width: calc(100% - 2rem);
+}
