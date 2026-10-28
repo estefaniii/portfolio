@@ -2733,38 +2733,27 @@ button {
 
 /* ===================================================================
    RONDA DE REDISEÑO (oct-2026)
-   Fuentes fuera de la lista prohibida, color sólido en títulos, sin
-   adornos flotantes y menú de celular sólido con un solo acento.
+   Sin adornos flotantes, menú de celular sólido con un solo acento
+   y tarjetas con borde de 1 px. Las fuentes y los títulos quedan como estaban.
    =================================================================== */
-:root {
-	--body-font: 'Figtree', sans-serif;
-	--title-font: 'Archivo', sans-serif;
-	--accent-font: 'Archivo', sans-serif;
-}
 
 /* Logo: monograma con iniciales */
 .navbar__logo {
 	gap: 0.55rem;
 	padding: 0.35rem 0.25rem !important;
-	font-family: var(--title-font);
-	font-weight: 700;
-	letter-spacing: -0.01em;
 }
 .navbar__logo::before {
 	display: none !important;
 }
 .navbar__mark {
-	display: inline-grid;
-	place-items: center;
-	width: 2rem;
-	height: 2rem;
-	border-radius: 0.6rem;
-	background: var(--primary-color);
-	color: #1f2229;
-	font-size: 0.85rem;
-	font-weight: 800;
-	letter-spacing: 0;
+	display: block;
+	width: 34px;
+	height: 34px;
 	flex-shrink: 0;
+	transition: transform 0.25s ease;
+}
+.navbar__logo:hover .navbar__mark {
+	transform: rotate(-6deg);
 }
 @media (max-width: 400px) {
 	.navbar__surname {
@@ -2772,29 +2761,6 @@ button {
 	}
 }
 
-/* Títulos en color sólido, con un subrayado corto del color de marca */
-.section__title,
-.home__title {
-	background: none !important;
-	-webkit-background-clip: initial !important;
-	background-clip: initial !important;
-	color: var(--title-color) !important;
-	font-family: var(--title-font) !important;
-	font-weight: 800 !important;
-	letter-spacing: -0.02em;
-}
-.section__title::after {
-	background: var(--primary-color) !important;
-	width: 48px !important;
-	height: 3px !important;
-	border-radius: 2px;
-}
-.home__title {
-	letter-spacing: -0.03em;
-}
-.home__title-cursor {
-	background-color: var(--primary-color) !important;
-}
 
 /* Portada sin íconos flotando ni resplandor alrededor de la foto */
 .home__layer,
@@ -2837,7 +2803,6 @@ button {
 		gap: 0.6rem;
 		width: 100%;
 		padding: 0.85rem 0.25rem !important;
-		font-family: var(--title-font);
 		font-size: 1.15rem !important;
 		font-weight: 600;
 		color: var(--title-color) !important;
