@@ -2730,3 +2730,216 @@ button {
 	min-width: 0 !important;
 	padding: 0.6rem 1rem !important;
 }
+
+/* ===================================================================
+   RONDA DE REDISEÑO (oct-2026)
+   Fuentes fuera de la lista prohibida, color sólido en títulos, sin
+   adornos flotantes y menú de celular sólido con un solo acento.
+   =================================================================== */
+:root {
+	--body-font: 'Figtree', sans-serif;
+	--title-font: 'Archivo', sans-serif;
+	--accent-font: 'Archivo', sans-serif;
+}
+
+/* Logo: monograma con iniciales */
+.navbar__logo {
+	gap: 0.55rem;
+	padding: 0.35rem 0.25rem !important;
+	font-family: var(--title-font);
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+.navbar__logo::before {
+	display: none !important;
+}
+.navbar__mark {
+	display: inline-grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 0.6rem;
+	background: var(--primary-color);
+	color: #1f2229;
+	font-size: 0.85rem;
+	font-weight: 800;
+	letter-spacing: 0;
+	flex-shrink: 0;
+}
+@media (max-width: 400px) {
+	.navbar__surname {
+		display: none;
+	}
+}
+
+/* Títulos en color sólido, con un subrayado corto del color de marca */
+.section__title,
+.home__title {
+	background: none !important;
+	-webkit-background-clip: initial !important;
+	background-clip: initial !important;
+	color: var(--title-color) !important;
+	font-family: var(--title-font) !important;
+	font-weight: 800 !important;
+	letter-spacing: -0.02em;
+}
+.section__title::after {
+	background: var(--primary-color) !important;
+	width: 48px !important;
+	height: 3px !important;
+	border-radius: 2px;
+}
+.home__title {
+	letter-spacing: -0.03em;
+}
+.home__title-cursor {
+	background-color: var(--primary-color) !important;
+}
+
+/* Portada sin íconos flotando ni resplandor alrededor de la foto */
+.home__layer,
+.home__image-decoration,
+.home__image-glow {
+	display: none !important;
+}
+.home__image-container {
+	animation: none !important;
+	box-shadow: none !important;
+	border: 4px solid var(--primary-color);
+	background: var(--container-color) !important;
+}
+
+/* Menú del celular: panel sólido, enlaces grandes y un solo color de acento */
+@media (max-width: 991px) {
+	.navbar__menu {
+		width: min(82%, 320px) !important;
+		background-color: var(--body-color) !important;
+		border-left: 1px solid var(--border-color);
+		box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0) !important;
+		padding: 5.5rem 1.75rem 2rem !important;
+		transition: right 0.35s ease, box-shadow 0.35s ease !important;
+	}
+	.navbar__menu:target {
+		box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.55) !important;
+	}
+	.navbar__list {
+		flex-direction: column !important;
+		align-items: flex-start !important;
+		gap: 0.25rem !important;
+		row-gap: 0.25rem !important;
+	}
+	.navbar__item {
+		width: 100%;
+	}
+	.navbar__link {
+		display: flex !important;
+		align-items: center;
+		gap: 0.6rem;
+		width: 100%;
+		padding: 0.85rem 0.25rem !important;
+		font-family: var(--title-font);
+		font-size: 1.15rem !important;
+		font-weight: 600;
+		color: var(--title-color) !important;
+		border-bottom: 1px solid var(--border-color);
+		background: none !important;
+	}
+	.navbar__link::before {
+		content: '';
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: transparent;
+		flex-shrink: 0;
+	}
+	.navbar__link.active,
+	.navbar__link:hover {
+		color: var(--primary-color) !important;
+	}
+	.navbar__link.active::before {
+		background: var(--primary-color);
+	}
+	.navbar__link::after,
+	.navbar__slider {
+		display: none !important;
+	}
+	.btn__close {
+		top: 1.25rem !important;
+		right: 1.25rem !important;
+		color: var(--title-color) !important;
+		font-size: 1.8rem !important;
+	}
+	.btn__open {
+		color: var(--title-color) !important;
+	}
+}
+
+/* Tarjetas: borde de 1 px en vez de sombra suave en todo */
+.skills__cards-container,
+.projects__project,
+.contact__info,
+.contact__form,
+.skills__tags {
+	box-shadow: none !important;
+	border: 1px solid var(--border-color) !important;
+}
+.skills__tech .skills__cards-container {
+	box-shadow: none !important;
+	border-top-width: 3px !important;
+}
+.projects__project:hover {
+	transform: translateY(-4px) !important;
+	border-color: var(--primary-color) !important;
+}
+
+/* Encabezado sólido: sin efecto vidrio (además encerraba el menú del celular) */
+.header {
+	backdrop-filter: none !important;
+	-webkit-backdrop-filter: none !important;
+	background-color: var(--body-color) !important;
+	box-shadow: none !important;
+	border-bottom: 1px solid var(--border-color);
+}
+.dark-theme .header {
+	background-color: var(--body-color) !important;
+}
+
+/* Botones en color sólido con texto oscuro (contraste mayor a 4.5:1) */
+.btn--primary,
+.btn.contact__form-button,
+.projects__button--demo,
+.skills__tag {
+	background: var(--primary-color) !important;
+	color: #1f2229 !important;
+	border: 1px solid var(--primary-color) !important;
+	box-shadow: none !important;
+}
+.btn--primary i,
+.btn.contact__form-button i,
+.projects__button--demo i,
+.skills__tag i {
+	color: #1f2229 !important;
+}
+.btn--primary:hover,
+.btn.contact__form-button:hover,
+.projects__button--demo:hover {
+	background: var(--primary-color-alt) !important;
+	border-color: var(--primary-color-alt) !important;
+	transform: translateY(-2px);
+}
+.projects__button--code {
+	background: transparent !important;
+	color: var(--title-color) !important;
+	border: 1px solid var(--border-color) !important;
+	box-shadow: none !important;
+}
+.projects__button--code:hover {
+	border-color: var(--primary-color) !important;
+	color: var(--primary-color) !important;
+}
+
+/* Acerca de Mí: texto alineado a la izquierda */
+.about__description {
+	text-align: left !important;
+	line-height: 1.7;
+}
